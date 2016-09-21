@@ -1,0 +1,435 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>TypeScript vs Babel | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="Transpiler or not?Before discussing TypeScript and Babel, what we need to decide is whether to use a transpiler or not.
+I was once opponent on using t">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="TypeScript vs Babel | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/26/TypeScript-vs-Babel/" title="TypeScript vs Babel" itemprop="url">TypeScript vs Babel</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-12-26T10:38:00.000Z" itemprop="datePublished">Dec 26 2015</time>
+    Updated:<time datetime="2016-09-21T15:32:59.000Z" itemprop="dateModified">Sep 21 2016</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transpiler-or-not"><span class="toc-number">1.</span> <span class="toc-text">Transpiler or not?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Catch-up-the-great-features-in-ES6-standard"><span class="toc-number">1.1.</span> <span class="toc-text">Catch up the great features in ES6 standard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unevitable-build-stage"><span class="toc-number">1.2.</span> <span class="toc-text">Unevitable build stage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-written-in-TypeScript-and-Babel-IS-standard-Javascript"><span class="toc-number">1.3.</span> <span class="toc-text">Code written in TypeScript and Babel IS standard Javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeScript-vs-Babel"><span class="toc-number">2.</span> <span class="toc-text">TypeScript vs Babel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6-new-feature-support"><span class="toc-number">2.1.</span> <span class="toc-text">ES6 new feature support</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transpiled-code-readability"><span class="toc-number">2.2.</span> <span class="toc-text">Transpiled code readability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Module"><span class="toc-number">2.3.</span> <span class="toc-text">Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-and-IDE-support"><span class="toc-number">2.4.</span> <span class="toc-text">Type and IDE support</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">3.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+		</div>
+		
+		<h2 id="Transpiler-or-not"><a href="#Transpiler-or-not" class="headerlink" title="Transpiler or not?"></a>Transpiler or not?</h2><p>Before discussing TypeScript and Babel, what we need to decide is <strong>whether to use a transpiler or not</strong>.</p>
+<p>I was once opponent on using transpiler language when I first saw CoffeeScript, ClojureScript.  I think that is purely the programmer’s ingrained habit and that is why it goes popular mostly in particular communities (e.g. Python, Ruby, Lisp).  </p>
+<p>There are also other languages (e.g. GWT, Dart) that can be used for web frontend development but they don’t feel right either, not to mention other transpiler that compiles some tranditional backend language like JAVA, Ruby or Python to JavaScript.  I don’t know why such scenario exists.  Just because they don’t want to learn JavaScript?</p>
+<p>However, now I am a proponent of using “advanced” language and then transpiling to raw Javascript.  The main reasons are as below:</p>
+<h3 id="Catch-up-the-great-features-in-ES6-standard"><a href="#Catch-up-the-great-features-in-ES6-standard" class="headerlink" title="Catch up the great features in ES6 standard"></a>Catch up the great features in ES6 standard</h3><p>ES6 standard includes a lot of great features while not every JS environment (Browsers, Node.js, etc.) supports them well and consistently.  It’s a huge benefit if the code can be written in latest standard once and reusabled in every JS environment especially working in full stack JS project.</p>
+<p>Transpiler can address this issue pretty well.</p>
+<h3 id="Unevitable-build-stage"><a href="#Unevitable-build-stage" class="headerlink" title="Unevitable build stage"></a>Unevitable build stage</h3><p>Another reason I oppose transpiler before is the worry on the quality &amp; readability of the code transpiled and the hassle of adding unnecessary build stages.</p>
+<p>But now, modulization, code sharing between browser and backend, bundling require a build stage anyway.  What is more, there are plenty of solutions to realize code hot-reload to greatly streamline development process already.  Hence, adding transpilation step is not a problem anymore.</p>
+<h3 id="Code-written-in-TypeScript-and-Babel-IS-standard-Javascript"><a href="#Code-written-in-TypeScript-and-Babel-IS-standard-Javascript" class="headerlink" title="Code written in TypeScript and Babel IS standard Javascript"></a>Code written in TypeScript and Babel IS standard Javascript</h3><p>With Babel, you just use any new feature it supports in JavaScript way.</p>
+<p>TypeScript is so called a typed superset of JavaScript.  In theory, any existing JavaScript can be processed by TypeScript after renaming <code>.js</code> to <code>.ts</code> directly.  Although actually some edge cases disobey this rule, it’s easy to identify and fix.</p>
+<p>Using TypeScript and Babel for transpilation differs from CoffeeScript and other alternatives.  We are actually writing the future JavaScript for the moment.  Enjoy it.</p>
+<h2 id="TypeScript-vs-Babel"><a href="#TypeScript-vs-Babel" class="headerlink" title="TypeScript vs Babel"></a>TypeScript vs Babel</h2><h3 id="ES6-new-feature-support"><a href="#ES6-new-feature-support" class="headerlink" title="ES6 new feature support"></a>ES6 new feature support</h3><p>Please go check ECMAScript 6 compatibility <a href="https://kangax.github.io/compat-table/es6/" target="_blank" rel="external">table</a>.  In general, TypeScript support on new ES6 feature cannot catch up Babel.  If you have big concern on this, the only option is Babel.</p>
+<h3 id="Transpiled-code-readability"><a href="#Transpiled-code-readability" class="headerlink" title="Transpiled code readability"></a>Transpiled code readability</h3><p>Refering to a simple class defined as below.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Greeter &#123;</div><div class="line">  greeting: string;</div><div class="line"></div><div class="line">  constructor(message: string) &#123;</div><div class="line">    this.greeting = message;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  greet() &#123;</div><div class="line">      return this.greeting;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>TypeScript</strong> transpiled code is more clean, recognizable and familiar to the approach we used to define class before.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var Greeter = (function () &#123;</div><div class="line">      function Greeter(message) &#123;</div><div class="line">          this.greeting = message;</div><div class="line">      &#125;</div><div class="line">      Greeter.prototype.greet = function () &#123;</div><div class="line">          return this.greeting;</div><div class="line">      &#125;;</div><div class="line">      return Greeter;</div><div class="line">  &#125;)();</div></pre></td></tr></table></figure>
+<p><strong>Babel</strong> transpiled result code takes advantage on using the new Object method but makes the code a little complex.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">var _createClass = (function () &#123; function defineProperties(target, props) &#123; for (var i = 0; i &lt; props.length; i++) &#123; var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (&quot;value&quot; in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); &#125; &#125; return function (Constructor, protoProps, staticProps) &#123; if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; &#125;; &#125;)();</div><div class="line"></div><div class="line">  Object.defineProperty(exports, &quot;__esModule&quot;, &#123;</div><div class="line">    value: true</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  function _classCallCheck(instance, Constructor) &#123; if (!(instance instanceof Constructor)) &#123; throw new TypeError(&quot;Cannot call a class as a function&quot;); &#125; &#125;</div><div class="line"></div><div class="line">  var Greeter = exports.Greeter = (function () &#123;</div><div class="line">    // transform-class-properties</div><div class="line"></div><div class="line">    function Greeter(message) &#123;</div><div class="line">      _classCallCheck(this, Greeter);</div><div class="line"></div><div class="line">      this.greeting = message;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    _createClass(Greeter, [&#123;</div><div class="line">      key: &apos;greet&apos;,</div><div class="line">      value: function greet() &#123;</div><div class="line">        return this.greeting;</div><div class="line">      &#125;</div><div class="line">    &#125;]);</div><div class="line"></div><div class="line">    return Greeter;</div><div class="line">  &#125;)();</div></pre></td></tr></table></figure>
+<h3 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h3><p>In ES6, it is exactly one module per file and one file per module.  <code>import</code> and <code>export</code> keyword are used to reference other modules or publish its own API.</p>
+<p>Babel exactly supports same syntax and can transpile to CommonJS, AMD and other style.</p>
+<p>In TypeScript, there are two different concepts:</p>
+<ol>
+<li>Internal Module (Namespaces)</li>
+<li>External Module</li>
+</ol>
+<p>I don’t want to go to the extent of explaining the difference of them.  If you really want to know about it, you can check it out in the TypeScript <a href="http://www.typescriptlang.org/Handbook#modules" target="_blank" rel="external">handbook</a>.  The external one is just like the ES6 standard.</p>
+<p>What you must know is that, <strong>DON’T mix them together</strong>.  And you should have <strong>NO CHOICE but to use the external module</strong>.  However, if you are telling me you don’t have to use any 3rd-party library, then you can go with the internal one.</p>
+<p><a href="https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/" target="_blank" rel="external">https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/</a></p>
+<p>Some usage syntax of external module used in TypeScript are as below for backwards compatibility with CommonJS and AMD style modules:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// xxx.js</div><div class="line">export = xxx;</div><div class="line"></div><div class="line">// yyy.js</div><div class="line">import xxx = require(&apos;./xxx&apos;);</div></pre></td></tr></table></figure>
+<p>However, above usage should be legacy soon.  In order to take advantage of ES6 and write uniform code, I think it’s better to use the exact ES6 syntax instead.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// xxx.js</div><div class="line">export default xxx;</div><div class="line"></div><div class="line">// yyy.js</div><div class="line">import xxx from &apos;./xxx&apos;;</div></pre></td></tr></table></figure>
+<h3 id="Type-and-IDE-support"><a href="#Type-and-IDE-support" class="headerlink" title="Type and IDE support"></a>Type and IDE support</h3><p><strong>TypeScript</strong></p>
+<p>As JSer, I once believed that type and compiler support are not so much important.  I might also be one of the main reason that people thinks it’s flexible and love it.  However, quality control is really not that easy if the codebase is large and many people involved, especially when it’s used heavily in system with complex business logic like ERP while no Unit Test exists.  If we can have type support and compilation checking with little cost, it should be worthy.</p>
+<p>Type support is the first principle in TypeScript and you can tell from its definition of position (typed supperset of JavaScript).  What is more, the <a href="http://definitelytyped.org/" target="_blank" rel="external">DefinitelyTyped</a> project provides type support on many existing 3rd-party JavaScript libraries.  It seems the whole JavaScript world supports type suddently and you don’t need to start from scratch.</p>
+<p>Let’s use Sublime Text 3 with TypeScript plugin as an example to see how it’s working.  </p>
+<p><strong>Install TypeScript &amp; Definition manager</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g typescript tsd</div><div class="line">tsd install angular angular-route</div></pre></td></tr></table></figure>
+<p>After the installation completes, there is a <code>typings</code> folder generated under the location you execute <code>tsd</code> command.  The definition files are located there and refering these definition files in your JavaScript is very simple.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// &lt;reference path=&quot;typings/angularjs/angular.d.ts&quot; /&gt;</div><div class="line">// &lt;reference path=&quot;typings/angularjs/angular-route.d.ts&quot; /&gt;</div><div class="line"></div><div class="line">import &apos;angular&apos;;</div><div class="line">import &apos;angular-route&apos;;</div></pre></td></tr></table></figure>
+<p><strong>Code Tips and auto-complete</strong></p>
+<p><img alt="Code Tips" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Code-Tips.png"></p>
+<p><strong>Jump to definition and many support shortcuts</strong></p>
+<p><img alt="Plugin-Features" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Plugin-Features.png"></p>
+<p><strong>Warning about missing properties</strong></p>
+<p><code>Show Error List</code> shows all error in your project.  </p>
+<p><img alt="Miss-Properties-1" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Miss-Properties1.png"></p>
+<p><img alt="Miss-Properties-2" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Miss-Properties2.png"></p>
+<p><strong>Warning about incorrect function signature</strong></p>
+<p>Status bar shows the error focusing on.</p>
+<p><img alt="Unmatch-Interface" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Interface.png"></p>
+<p><strong>Warn but not block</strong></p>
+<p>When you compiles the TypeScript to normal JavaScript, it warns but not blocks on code generation by default.  This is great because it allows for gradual evolvement after you mass renaming <code>.js</code> file to <code>.ts</code> format for the transition.</p>
+<p><img alt="Warn-Not-Block" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Not-Block.png"></p>
+<p>So far, you have a glimpse on how fascinating the IDE support is for TypeScript.  I haven’t tried the famous Webstorm and Visual Studio, but they should have great support as well.</p>
+<p><strong>Babel</strong></p>
+<p>There is a project called <a href="http://flowtype.org/" target="_blank" rel="external">Flow</a> for type support in Babel.  However, it doesn’t support Windows environment yet.  It also have no support for <a href="http://definitelytyped.org/" target="_blank" rel="external">DefinitelyTyped</a> project yet although it [plans][] to.</p>
+<p>For IDE, Sublime’s Flow plugin doesn’t seem to have much feature.  Facebook has built an IDE called <a href="http://nuclide.io/" target="_blank" rel="external">Nuclide</a> as suite of packages on top of Atom.  From my experience, installing <a href="http://nuclide.io/" target="_blank" rel="external">Nuclide</a> packages is very slow and causes the Atom to halt with high CPU.  I have to give it up in Mac.  You may have a try though.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><img alt="TypeScript_Babel_Decision" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript_Babel_Decision.png"></p>
+<p>Above sudo code is just for funny purpose.  It’s really a choice of taste and there is no aboslute right or wrong for the selection.  Actually, there are other things to consider as well.  Which works better with Webpack and Node.js?  How to fit into the build process?  I will illustrate these areas’ consideration in another article later.  </p>
+<p>For me, I decided to take the shot for TypeScript because I evaluated that type support is more important than purely pursuing edge feature support and it has great IDE support.  What is more, AngularJS 2 are written with it.  They are my best bet for future.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/TypeScript/">TypeScript</a><a href="/tags/Babel/">Babel</a><a href="/tags/ES6/">ES6</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/" data-title="TypeScript vs Babel | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/12/31/2015-retrospect-and-2016-goal-setting/" title="2015 Retrospect and 2016 Goal Setting">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  2015 Retrospect and 2016 Goal Setting</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/"  title="Dive into Kanban (6) - Scrum vs Kanban">
+ <strong>NEXT:</strong><br/> 
+ <span>Dive into Kanban (6) - Scrum vs Kanban
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transpiler-or-not"><span class="toc-number">1.</span> <span class="toc-text">Transpiler or not?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Catch-up-the-great-features-in-ES6-standard"><span class="toc-number">1.1.</span> <span class="toc-text">Catch up the great features in ES6 standard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unevitable-build-stage"><span class="toc-number">1.2.</span> <span class="toc-text">Unevitable build stage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-written-in-TypeScript-and-Babel-IS-standard-Javascript"><span class="toc-number">1.3.</span> <span class="toc-text">Code written in TypeScript and Babel IS standard Javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeScript-vs-Babel"><span class="toc-number">2.</span> <span class="toc-text">TypeScript vs Babel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6-new-feature-support"><span class="toc-number">2.1.</span> <span class="toc-text">ES6 new feature support</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transpiled-code-readability"><span class="toc-number">2.2.</span> <span class="toc-text">Transpiled code readability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Module"><span class="toc-number">2.3.</span> <span class="toc-text">Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-and-IDE-support"><span class="toc-number">2.4.</span> <span class="toc-text">Type and IDE support</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">3.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>28</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>50</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/tags/Adapt/" style="font-size: 10px;">Adapt</a> <a href="/tags/Adoption/" style="font-size: 10px;">Adoption</a> <a href="/tags/Ajax/" style="font-size: 11.25px;">Ajax</a> <a href="/tags/Analytical-Reading/" style="font-size: 10px;">Analytical Reading</a> <a href="/tags/AngularJS/" style="font-size: 16.25px;">AngularJS</a> <a href="/tags/Async/" style="font-size: 10px;">Async</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Believe/" style="font-size: 10px;">Believe</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 15px;">Book</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Calisthenics/" style="font-size: 10px;">Calisthenics</a> <a href="/tags/Callback/" style="font-size: 10px;">Callback</a> <a href="/tags/Change/" style="font-size: 13.75px;">Change</a> <a href="/tags/Coding/" style="font-size: 12.5px;">Coding</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/Critical-Thinking/" style="font-size: 10px;">Critical Thinking</a> <a href="/tags/DB/" style="font-size: 10px;">DB</a> <a href="/tags/Delegation/" style="font-size: 11.25px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.25px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.25px;">Destiny</a> <a href="/tags/Directive/" style="font-size: 11.25px;">Directive</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Execution-context/" style="font-size: 10px;">Execution context</a> <a href="/tags/Experience/" style="font-size: 11.25px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 10px;">ExtJS</a> <a href="/tags/ExtJs/" style="font-size: 17.5px;">ExtJs</a> <a href="/tags/Flow/" style="font-size: 11.25px;">Flow</a> <a href="/tags/Function-definition/" style="font-size: 10px;">Function definition</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/GTD/" style="font-size: 11.25px;">GTD</a> <a href="/tags/Goal/" style="font-size: 15px;">Goal</a> <a href="/tags/Habit/" style="font-size: 10px;">Habit</a> <a href="/tags/HangJS/" style="font-size: 10px;">HangJS</a> <a href="/tags/Health/" style="font-size: 10px;">Health</a> <a href="/tags/HttpBackend/" style="font-size: 11.25px;">HttpBackend</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a> <a href="/tags/JAWR/" style="font-size: 10px;">JAWR</a> <a href="/tags/JSConf/" style="font-size: 11.25px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 11.25px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 17.5px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/JingJS/" style="font-size: 10px;">JingJS</a> <a href="/tags/Kanban/" style="font-size: 16.25px;">Kanban</a> <a href="/tags/Lead-Time/" style="font-size: 10px;">Lead Time</a> <a href="/tags/Leadership/" style="font-size: 11.25px;">Leadership</a> <a href="/tags/Loop/" style="font-size: 11.25px;">Loop</a> <a href="/tags/Management/" style="font-size: 17.5px;">Management</a> <a href="/tags/Maven/" style="font-size: 11.25px;">Maven</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 13.75px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/NodeJS/" style="font-size: 16.25px;">NodeJS</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Permanent/" style="font-size: 10px;">Permanent</a> <a href="/tags/Pomodoro/" style="font-size: 10px;">Pomodoro</a> <a href="/tags/Process/" style="font-size: 10px;">Process</a> <a href="/tags/Productivity/" style="font-size: 11.25px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 12.5px;">Promise</a> <a href="/tags/Prototype/" style="font-size: 10px;">Prototype</a> <a href="/tags/Prototype-Chain/" style="font-size: 10px;">Prototype Chain</a> <a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a> <a href="/tags/Retrospect/" style="font-size: 18.75px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Sinon-js/" style="font-size: 11.25px;">Sinon.js</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/String-interpolation/" style="font-size: 10px;">String interpolation</a> <a href="/tags/Stuff/" style="font-size: 10px;">Stuff</a> <a href="/tags/Tail-Call-Optimization/" style="font-size: 10px;">Tail Call Optimization</a> <a href="/tags/Thunk/" style="font-size: 10px;">Thunk</a> <a href="/tags/Time-Management/" style="font-size: 11.25px;">Time Management</a> <a href="/tags/Trampoline/" style="font-size: 10px;">Trampoline</a> <a href="/tags/Trip/" style="font-size: 12.5px;">Trip</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/UnitTest/" style="font-size: 16.25px;">UnitTest</a> <a href="/tags/Value/" style="font-size: 10px;">Value</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Webassemble/" style="font-size: 10px;">Webassemble</a> <a href="/tags/Weblogic/" style="font-size: 10px;">Weblogic</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a> <a href="/tags/Workout/" style="font-size: 10px;">Workout</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/browserify/" style="font-size: 10px;">browserify</a> <a href="/tags/bundling/" style="font-size: 10px;">bundling</a> <a href="/tags/i18n/" style="font-size: 11.25px;">i18n</a> <a href="/tags/ngClass/" style="font-size: 10px;">ngClass</a> <a href="/tags/ngRepeat/" style="font-size: 10px;">ngRepeat</a> <a href="/tags/this/" style="font-size: 10px;">this</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>

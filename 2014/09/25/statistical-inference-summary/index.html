@@ -1,0 +1,538 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Statistical Inference 课后小结 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="好不容易才把 Statistical Inference 的课上完, 真是有点吃力.  简略把教的东西列出来吧, 方便日后再复习.
+概率条件概率 (Conditional Probability)当 B 发生的概率为 P(B) 时, A 发生的概率为 P(A|B) = P(A ∩ B) / P(B)">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Statistical Inference 课后小结 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/09/25/statistical-inference-summary/" title="Statistical Inference 课后小结" itemprop="url">Statistical Inference 课后小结</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-09-25T14:58:46.000Z" itemprop="datePublished">Sep 25 2014</time>
+    Updated:<time datetime="2015-05-20T15:09:56.000Z" itemprop="dateModified">May 20 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概率"><span class="toc-number">1.</span> <span class="toc-text">概率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条件概率-Conditional-Probability"><span class="toc-number">1.1.</span> <span class="toc-text">条件概率 (Conditional Probability)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bayes’-rule"><span class="toc-number">1.2.</span> <span class="toc-text">Bayes’ rule</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#诊断测试-Diagnostic-test"><span class="toc-number">1.3.</span> <span class="toc-text">诊断测试 (Diagnostic test)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期望值-Expected-Value"><span class="toc-number">2.</span> <span class="toc-text">期望值 (Expected Value)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean"><span class="toc-number">2.1.</span> <span class="toc-text">Mean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差-Variance"><span class="toc-number">2.2.</span> <span class="toc-text">方差 (Variance)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的概率分布模型"><span class="toc-number">3.</span> <span class="toc-text">常见的概率分布模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伯努利分布-Bernoulli-distribution"><span class="toc-number">3.1.</span> <span class="toc-text">伯努利分布 (Bernoulli distribution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正态分布-Normal-distribution"><span class="toc-number">3.2.</span> <span class="toc-text">正态分布 (Normal distribution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Poisson-distribution"><span class="toc-number">3.3.</span> <span class="toc-text">(Poisson distribution)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#渐近-Asymptotics"><span class="toc-number">4.</span> <span class="toc-text">渐近 (Asymptotics)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大数定律-Law-of-Large-Number"><span class="toc-number">4.1.</span> <span class="toc-text">大数定律 (Law of Large Number)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中心极限定理-Central-Limit-Theorem"><span class="toc-number">4.2.</span> <span class="toc-text">中心极限定理 (Central Limit Theorem)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Confidence-Intervals"><span class="toc-number">4.3.</span> <span class="toc-text">Confidence Intervals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T-Confidence-Intervals"><span class="toc-number">4.4.</span> <span class="toc-text">T Confidence Intervals</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hypothesis-testing"><span class="toc-number">5.</span> <span class="toc-text">Hypothesis testing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">5.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误类型"><span class="toc-number">5.2.</span> <span class="toc-text">错误类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upper-Lower-and-Two-Failed-Test"><span class="toc-number">5.3.</span> <span class="toc-text">Upper, Lower, and Two Failed Test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#和-Confidence-Interval-的关系"><span class="toc-number">5.4.</span> <span class="toc-text">和 Confidence Interval 的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P-values"><span class="toc-number">6.</span> <span class="toc-text">P-values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Power"><span class="toc-number">7.</span> <span class="toc-text">Power</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-testing"><span class="toc-number">8.</span> <span class="toc-text">Multiple testing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Types-of-Error"><span class="toc-number">8.1.</span> <span class="toc-text">Types of Error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Error-Rates"><span class="toc-number">8.2.</span> <span class="toc-text">Error Rates</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Correction"><span class="toc-number">8.3.</span> <span class="toc-text">Correction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resampled-inference"><span class="toc-number">9.</span> <span class="toc-text">Resampled inference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jackknife"><span class="toc-number">9.1.</span> <span class="toc-text">jackknife</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bootstrap"><span class="toc-number">9.2.</span> <span class="toc-text">bootstrap</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>好不容易才把 <a href="https://www.coursera.org/course/statinference" target="_blank" rel="external">Statistical Inference</a> 的课上完, 真是有点吃力.  简略把教的东西列出来吧, 方便日后再复习.</p>
+<h2 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h2><h3 id="条件概率-Conditional-Probability"><a href="#条件概率-Conditional-Probability" class="headerlink" title="条件概率 (Conditional Probability)"></a>条件概率 (Conditional Probability)</h3><p>当 B 发生的概率为 P(B) 时, A 发生的概率为 <code>P(A|B) = P(A ∩ B) / P(B)</code>.<br>如果 A 和 B 是完全独立的事件, 那么 <code>P(A|B) = P(A)P(B) / P(B) = P(A)</code>.</p>
+<h3 id="Bayes’-rule"><a href="#Bayes’-rule" class="headerlink" title="Bayes’ rule"></a>Bayes’ rule</h3><p><code>P(B|A) = P(A|B)P(B) / (P(A|B)P(B) + P(A|B𝑐)P(B𝑐))</code></p>
+<p><code>P(B𝑐) = 1 - P(B)</code></p>
+<h3 id="诊断测试-Diagnostic-test"><a href="#诊断测试-Diagnostic-test" class="headerlink" title="诊断测试 (Diagnostic test)"></a>诊断测试 (Diagnostic test)</h3><p>首先, 诊断测试里面有几个定义先要搞清楚：</p>
+<ul>
+<li><em>+</em> 测试为患病的情况</li>
+<li><em>-</em> 测试为没有患病的情况</li>
+<li><em>D</em> 确定患病的情况</li>
+<li><em>D𝑐</em> 确定没有患病的情况</li>
+<li><em>sensitivity</em> 当确实患病时, 测试为患病的概率 <code>P(+ | D)</code></li>
+<li><em>specificity</em> 当确实没有患病时, 测试为没有患病的概率 <code>P(- | D𝑐)</code></li>
+<li><em>positive predictive value</em> <code>P(D | +)</code></li>
+<li><em>negative predictive value</em> <code>P(D𝑐 | -)</code></li>
+<li><em>prevalance of the disease</em> <code>P(D)</code></li>
+</ul>
+<p>有个很有趣的例子：<br>假如在一项 HIV 的研究中, 有一种 HIV 抗体检查的 sensitivity 是 99.7%, specificity 是 98.5%. (看起来这个抗体检查应该很准, 对吧？)  如果一个人, 从 0.1% prevalence HIV 的群体中抽出来, 他做了这个抗体检查后, 结果是阳性也就是检查结果显示他应该有 HIV.  那么, 你觉得他确实患病的概率有多高呢？</p>
+<p>那我们来看看 positive predictive value 也就是 <code>P(D | +)</code> 概率是多少.  用 Bayes’ rule 公式代入去算一下可得 0.062.  不是很高吧？这么低的数值是由于低 prevalence 造成的。但是如果说你知道那个人是有用毒品习惯, 并且和 HIV 人士有接触。你会不会觉得他患病的概率更高？  其实影响的因素 prevalence 一点没变, 可是我们对所谓证据的诠释不同了.</p>
+<p><strong>Likelihood ratios</strong></p>
+<p><strong>DLR+</strong>, diagnostic likeihood ratio of a positive test, is <code>P(+ | D) / P(+ | D𝑐)</code></p>
+<pre><code>`sensitivity / (1 - specificity)`
+</code></pre><p><strong>DLR-</strong>, diagnostic likeihood ratio of a negative test, is <code>P(- | D) / P(- | D𝑐)</code></p>
+<pre><code>`(1 - sensitivity) / specificity`
+</code></pre><p>根据 Bayes’ rule 可以推导出：</p>
+<p><code>P(D | +) / P(D𝑐 | +) = DLR+ * P(D) / P(D𝑐)</code></p>
+<p>post-test odds of D = DLR+ * pre-test odds of D  (odds: 一个概率除以 1 减去它)</p>
+<p>相同道理： <code>P(D | -) / P(D𝑐 | -) = DLR- * P(D) / P(D𝑐)</code></p>
+<p><strong>IID</strong></p>
+<ul>
+<li><em>Independent</em>: statistically unrelated from one and another</li>
+<li><em>Identically distributed</em>: all having been drawn from the same population distribution</li>
+</ul>
+<h2 id="期望值-Expected-Value"><a href="#期望值-Expected-Value" class="headerlink" title="期望值 (Expected Value)"></a>期望值 (Expected Value)</h2><p><strong>Mean</strong>: 分布的中值特征<br><strong>Variance</strong> 和 <strong>Standard Deviation</strong>: 分布性的特征 (How spread out)</p>
+<p>Sample expected values 是用来推测 population 的特征的。</p>
+<p><code>E[X] = ∑ xp(x)</code> 表示了数据分布的位置和权重的中值。比如, 丟硬币:</p>
+<p><code>E[X] = 0 * 0.5 + 1 * 0.5 = 0.5</code></p>
+<p>如果说硬币正反不是概率均等, 而是正面的概率为 <code>p</code>, 那 <code>E[X] = 0 * (1 - p) + 1 * p = p</code></p>
+<p>同理掷骰子, 数字面值的中值, 那就是 <code>E[X] = 1 * 1/6 + 2 * 1/6 + ... + 6 * 1/6 = 3.5</code></p>
+<h3 id="Mean"><a href="#Mean" class="headerlink" title="Mean"></a>Mean</h3><p>通过取样, 来获取中值, 这个中值本身, 其实也是随机变量, 它的分布也是有个中值的。这个中值, 如果和它原来要推导的中值本身是一致的, 我们就会说这个推导是公正的 (unbiased)。</p>
+<p>这个说法有点拗口, 其实是这样的是. 比如说, 丟硬币本身的中值是 0.5.  那么, 我们有两种做法：</p>
+<ol>
+<li>一种是丢一次硬币, 记录下一次 0 或者 1, 重复丢 n 次, 然后算它本身的中值就是 0.5.  无限下去的理论值就是 population mean.</li>
+<li>另一种就是丢 m 次硬币, 先算一次中值 (sample mean), 记录下这个中值, 再重复丢 n 次, 最后再算一次中值. 其实也就是中值的中值.</li>
+</ol>
+<p><em>中值的中值</em> 如果说和 population mean 是一致的, 那这个推导就是公正的了. 而且, 如果算 sample mean 的数据 (上面的 m) 越多, 那么中值分布的质量函数 (density / mass function) 最越集中在 population mean.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GetSampleMean &lt;- <span class="keyword">function</span>(count) &#123;</div><div class="line">  data.frame(mean = replicate(<span class="number">5000</span>, mean(sample(c(<span class="number">0</span>, <span class="number">1</span>), count, replace = <span class="literal">T</span>))), cnt = count)</div><div class="line">&#125;</div><div class="line"></div><div class="line">data.df &lt;- rbind(GetSampleMean(<span class="number">10</span>), GetSampleMean(<span class="number">20</span>), GetSampleMean(<span class="number">30</span>))</div><div class="line"></div><div class="line"><span class="keyword">library</span>(ggplot2)</div><div class="line">qplot(x = mean, data = data.df, facets = . ~ cnt, fill = cnt)</div></pre></td></tr></table></figure>
+<p><img alt="Sample Mean" src="http://thinkingincrowd.u.qiniudn.com/sample_mean.png"></p>
+<h3 id="方差-Variance"><a href="#方差-Variance" class="headerlink" title="方差 (Variance)"></a>方差 (Variance)</h3><p>随机变量到中值的距离 <code>Var(X) = E[(X - μ)2] = E[X²] - E[X]²</code></p>
+<p>假如一个硬币正面的概率是 p.  那它的 Variance 就是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">E[X] = 0 * (1 - p) + 1 * p = p</div><div class="line">E[X²] = E[X] = p</div><div class="line">Var(X) = E[X²] - E[X]² = p - p² = p(1 - p)</div></pre></td></tr></table></figure>
+<p><strong>标准差 (Standard Deviation)</strong>: Variance 的平方根, S<br><strong>标准误 (Standard Error)</strong>: S/√n</p>
+<p>同中值一样, 样本的 Variance, S², 也是随机变量, 它的分布也是集中在 population variance, σ².</p>
+<h2 id="常见的概率分布模型"><a href="#常见的概率分布模型" class="headerlink" title="常见的概率分布模型"></a>常见的概率分布模型</h2><h3 id="伯努利分布-Bernoulli-distribution"><a href="#伯努利分布-Bernoulli-distribution" class="headerlink" title="伯努利分布 (Bernoulli distribution)"></a>伯努利分布 (Bernoulli distribution)</h3><p>又名两点分布或者 0-1 分布.  通常定 1 值的概率为 p, 0 值的概率为 (1 - p).  它的中值为 p, 方差为 p(1 - p).</p>
+<p><strong>伯努利試驗 (Binomial trial)</strong></p>
+<p>这个试验的随机变量，其实是伯努利分布随机值的总和 <code>X = ∑ⁿXᵢ</code>, Xᵢ 为 Bernoulli(p).</p>
+<p>它的质量函数 (mass function) 是: <code>P(X = x) = (n x) * pˣ * (1 - p)ⁿ⁻ˣ</code>. <code>(n x)</code> 是从 n 中取 x 的组合数.</p>
+<p>举个例子说，如果一个家庭有 8 个孩子, 7 个是女的，没有孪生.  如果生男生女的概率为 0.5, 那么 8 个孩子中，生 7 个或以上的女孩概率是多大?</p>
+<p><code>(8 7) * 0.5⁷ * (1 - 0.5)¹ + (8 8) * 0.5⁸ * (1 - 0.5)⁰ ≈ 0.04</code></p>
+<p>对应的 R 代码为:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">choose(<span class="number">8</span>, <span class="number">7</span>) * <span class="number">0.5</span>^<span class="number">8</span> + choose(<span class="number">8</span>, <span class="number">8</span>) * <span class="number">0.5</span>^<span class="number">8</span></div><div class="line"></div><div class="line">pbinom(<span class="number">6</span>, size = <span class="number">8</span>, prob = <span class="number">0.5</span>, lower.tail = <span class="literal">FALSE</span>)</div></pre></td></tr></table></figure>
+<h3 id="正态分布-Normal-distribution"><a href="#正态分布-Normal-distribution" class="headerlink" title="正态分布 (Normal distribution)"></a>正态分布 (Normal distribution)</h3><p>如果它的中值是 μ, 方差是 σ², 它的表达式可以写成 <code>X ~ N(μ, σ²)</code>.  如果 μ = 0, σ² = 1, 它就是标准正态分布, 通常用 Z 来表示.</p>
+<p>如果一个随机分布是正态分布 <code>X ~ N(μ, σ²)</code>, 那么经过 <code>(X - μ) / σ</code> 转换后的随机变量就会是标准正态分布.<br>反过来，如果 Z 是标准正态分布, <code>X = μ + σZ ~ N(μ, σ²)</code>.</p>
+<p><strong>正态分布的特性</strong></p>
+<ol>
+<li>68%, 95%, 99% 的正态质量在 1, 2, 3 的标准差内.</li>
+<li>-1.28， -1.645， -1.96， -2.33 分别是标准正态分布的 10th, 5th, 2.5th, 1st 区域</li>
+<li>由于对称性, 1.28， 1.645， 1.96， 2.33 分别是标准正态分布的 90th, 95th, 97.5th, 99th 区域</li>
+</ol>
+<p>比如说 N(μ, σ²) 分布的 95th percentile 是多少?</p>
+<p><code>μ + σ * 1.645</code> 或者</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">qnorm(<span class="number">.95</span>, mean = μ, sd = σ)`</div></pre></td></tr></table></figure>
+<p>再举个例.  如果一个网面的点击数平均值在 1020, 标准差在 50, 那么点击数超过 1160 的概率是多少?</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pnorm(<span class="number">1160</span>, mean = <span class="number">1120</span>, sd = <span class="number">50</span>, lower.tail = <span class="literal">F</span>)</div></pre></td></tr></table></figure>
+<h3 id="Poisson-distribution"><a href="#Poisson-distribution" class="headerlink" title="(Poisson distribution)"></a>(Poisson distribution)</h3><p>它的中值和方差都是 λ.  可用于对 counts, event-time or survival data, contingency table 进行建模.<br>当随机变量的 n 很大，概率 p 很小的时候，Poisson 的分布可以用于近似于 Binomial 分布.</p>
+<p>当它用来对速率的随机变量建模时:</p>
+<p><code>X ~ Poisson(λt)</code></p>
+<ul>
+<li>λ = E[X/t] 表示在单位时间内的数量</li>
+<li>t 是总时间</li>
+</ul>
+<p>比如说人出现在公交站的数量是 Poisson 分布.  假如每小时 2.5 个人, 如果我们观察 4 个小时, 3 个或者少于 3 个人的概率是多大?</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ppois(<span class="number">3</span>, lambda = <span class="number">2.5</span> * <span class="number">4</span>)</div></pre></td></tr></table></figure>
+<h2 id="渐近-Asymptotics"><a href="#渐近-Asymptotics" class="headerlink" title="渐近 (Asymptotics)"></a>渐近 (Asymptotics)</h2><h3 id="大数定律-Law-of-Large-Number"><a href="#大数定律-Law-of-Large-Number" class="headerlink" title="大数定律 (Law of Large Number)"></a>大数定律 (Law of Large Number)</h3><p>对于 IID 的随机值来说, 只要取的样本足够多, 它的平均值, 最终会和理论的 population mean 是一致的.</p>
+<h3 id="中心极限定理-Central-Limit-Theorem"><a href="#中心极限定理-Central-Limit-Theorem" class="headerlink" title="中心极限定理 (Central Limit Theorem)"></a>中心极限定理 (Central Limit Theorem)</h3><p>对于 IID 的随机值来说, 只要取的样本足够多, 它的平均值的分布会呈现出正态分布.</p>
+<p>样本 Xₙ 可以说是基本呈现出为 <code>N(μ, σ²/n)</code> 的正态分布.</p>
+<h3 id="Confidence-Intervals"><a href="#Confidence-Intervals" class="headerlink" title="Confidence Intervals"></a>Confidence Intervals</h3><p>对于正态分布来说，随机值 X 大于 <code>μ + 2σ/√n</code> 或者小于 <code>μ - 2σ/√n</code> 的概率只有 5%.  那么 <code>X ± 2σ/√n</code> 就叫做 μ 的 95% 区间.</p>
+<p><code>Est ± ZQ * SE</code></p>
+<h3 id="T-Confidence-Intervals"><a href="#T-Confidence-Intervals" class="headerlink" title="T Confidence Intervals"></a>T Confidence Intervals</h3><p><code>Est ± TQ * SE</code></p>
+<p>一般如果要进行分组之间的数据比较，会把分级之间的数据差，做 t interval 分析.</p>
+<p>比如 R 里面的 Sleep data, 分别比较两组不同的药物，对人的睡眠质量的影响.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">data(sleep)</div><div class="line">head(sleep)</div><div class="line"></div><div class="line"><span class="comment">##   extra group ID</span></div><div class="line"><span class="comment">## 1   0.7     1  1</span></div><div class="line"><span class="comment">## 2  -1.6     1  2</span></div><div class="line"><span class="comment">## 3  -0.2     1  3</span></div><div class="line"><span class="comment">## 4  -1.2     1  4</span></div><div class="line"><span class="comment">## 5  -0.1     1  5</span></div><div class="line"><span class="comment">## 6   3.4     1  6</span></div><div class="line"></div><div class="line">g1 &lt;- sleep$extra[<span class="number">1</span> : <span class="number">10</span>]</div><div class="line">g2 &lt;- sleep$extra[<span class="number">11</span> : <span class="number">20</span>]</div><div class="line">difference &lt;- g2 - g1</div><div class="line">mn &lt;- mean(difference)</div><div class="line">s &lt;- sd(difference)</div><div class="line">n &lt;- <span class="number">10</span></div><div class="line"></div><div class="line">mn + c(-<span class="number">1</span>, <span class="number">1</span>) * qt(<span class="number">.975</span>, n-<span class="number">1</span>) * s / sqrt(n)</div><div class="line">t.test(difference)</div><div class="line">t.test(g2, g1, paired = <span class="literal">TRUE</span>)</div><div class="line"></div><div class="line"><span class="comment">##        [,1] [,2]</span></div><div class="line"><span class="comment">## [1,] 0.7001 2.46</span></div><div class="line"><span class="comment">## [2,] 0.7001 2.46</span></div></pre></td></tr></table></figure>
+<p>上面的比较是把数据认为是 <code>paired = TRUE</code> 的.</p>
+<p>那如果是<strong>独立</strong>分组的数据的 t interval (<strong>恒定标准差</strong>的情况下) 怎么计算呢?<br>假如我们要计算 μᵧ - μₓ 的 (1 - α) * 100% 信心区间,</p>
+<p><code>Y - X ± tₙₓ₊ₙᵧ₋₂ * Sₚ * ( 1 / nₓ + 1 / nᵧ)^0.5</code></p>
+<p><code>Sₚ² = {(nₓ - 1) * Sₓ² + (nᵧ - 1) * Sᵧ²} / (nₓ + nᵧ - 2)</code></p>
+<p>下面的比较是把数据认为是 <code>paired = FALSE</code> 的.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sp &lt;- sqrt( ((n1 - <span class="number">1</span>) * sd(x1)^<span class="number">2</span> + (n2-<span class="number">1</span>) * sd(x2)^<span class="number">2</span>) / (n1 + n2-<span class="number">2</span>))</div><div class="line">semd &lt;- sp*sqrt(<span class="number">1</span>/n1+<span class="number">1</span>/n2)</div><div class="line"></div><div class="line">md + c(-<span class="number">1</span>,<span class="number">1</span>) * qt(<span class="number">.975</span>,n1+n2-<span class="number">2</span>) * semd</div><div class="line">t.test(g2, g1, paired = <span class="literal">FALSE</span>, var.equal = <span class="literal">TRUE</span>)$conf</div><div class="line"></div><div class="line"><span class="comment">##         [,1]  [,2]</span></div><div class="line"><span class="comment">## [1,] -0.2039 3.364</span></div><div class="line"><span class="comment">## [2,] -0.2039 3.364</span></div></pre></td></tr></table></figure>
+<p>可见两次的结果是非常不同的.  那到底怎么决定数据是否是 pair, 是否是独立的呢？</p>
+<p>比如说, 如果我们要检测非吸烟者和吸烟者的 BMI 指数, 因为这两组人群是完全不同的, 所以就是独立的.<br>或者说如果测试完全分开的两组一员, 一组使用药物, 一组使用安慰剂来测试药物的效用, 这也是独立的.</p>
+<p>但如果说测试是同一组人员, 使用药物前后的比较, 那就应该是 paired.</p>
+<p>那如果是<strong>独立</strong>分组的数据的 t interval (<strong>非恒定标准差</strong>的情况下) 怎么计算呢?</p>
+<p><code>Y - X ± tdf * ( Sₓ² / nₓ + Sᵧ² / nᵧ)^0.5</code></p>
+<p>tdf 里面的 degree of freedom 的计算为:</p>
+<p><code>df = ( Sₓ² / nₓ + Sᵧ² / nᵧ)² / {(Sₓ² / nₓ)² / (nₓ - 1) + (Sᵧ² / nᵧ)² / (nᵧ - 1)}</code></p>
+<p>参考链接: <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals.html" target="_blank" rel="external">http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals.html</a></p>
+<h2 id="Hypothesis-testing"><a href="#Hypothesis-testing" class="headerlink" title="Hypothesis testing"></a>Hypothesis testing</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>H₀, H-nought, 通常代表 “没有关联”, “没有影响” 的观点，又称为零假设.  它是目前要测试和证明的假设, 通常先被假定为正确的, 然后希望用统计数据来证明为错误或者需要慎重考虑的假设.</p>
+<p>Hₐ, (alternative hypothesis) 就是对应的希望被证明为正确的假设.</p>
+<p>比如说, Centers for Disease Control (CDC) 报道了从 1960 到 2002 年的身高体重质量指数趋势.  报告认为美国人在 2002 年比 1960 年重了很多, 而只是高了一点; 无论男女平均大约增加 24 磅.  在 2002 年, 男性平均体重为 191 磅.  假定有调查者认为到 2006 年, 也就是说男性平均体重将多于 191 磅.  那我们就可以把体重没有变化的推测定义为 H₀.</p>
+<pre><code>Null Hypothesis      H₀: μ = 191         (没变化)
+Research Hypothesis  Hₐ: μ &gt; 191         (调查人员的假定推测)
+</code></pre><p>为了验证这个假定, 我们在 2006 年随机选定了一组美国男性来测量体重.  如果我们抽取的样本为 n = 100 人, 测量结果为: <code>X = 197.1, s = 25.6</code>:</p>
+<p><code>P(X &gt; 197.1) = P(Z &gt; (197.1 - 191) / (25.6 / √100)) = P(Z &gt; 2.38) = 1 - 0.9913 = 0.0087</code></p>
+<p>也就是说, 如果说体重没有变化, 取样得到平均値为 197.1 的可能性还不到 1%.  那我们说 H₀ 是否成立呢?</p>
+<p>样例取自: <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_HypothesisTest-Means-Proportions/" target="_blank" rel="external">http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_HypothesisTest-Means-Proportions/</a></p>
+<h3 id="错误类型"><a href="#错误类型" class="headerlink" title="错误类型"></a>错误类型</h3><p><strong>Type I Error</strong>:  当事实为 H₀ 时，我们推测出的结果为 Hₐ<br><strong>Type II Error</strong>:  当事实为 Hₐ 时，我们推测出的结果为 H₀</p>
+<p>现在我们尝试把场景应用到法律当中, H₀ 为被控方是无罪的.  那么我们就需要找到一个标准来断定他是有罪的 (Reject H₀).  假如标准太高, 把无罪的人错误定罪的可能性就变高了 (Type I Error).  相反标准低了, Type II Error 就高了.</p>
+<p>所以, 其中一种做法就是选出一个常量 C (Critical Value), 使得样本的平均值 X 比它大时, 我们可以 Reject H₀.  要得到这个 C, 我们先要定出 α (level of significance), 来表示说如果在 H₀ 为真的时候, 我们却 Reject 了它的可能性, 也就是 Type I Error <code>P(X &gt; C; H₀) = 5%</code>.</p>
+<h3 id="Upper-Lower-and-Two-Failed-Test"><a href="#Upper-Lower-and-Two-Failed-Test" class="headerlink" title="Upper, Lower, and Two Failed Test"></a>Upper, Lower, and Two Failed Test</h3><p>一般来说, 对应 H₀, Hₐ 有下面三种形式:</p>
+<pre><code>H₁ : μ &lt; μ₀
+H₂ : μ ≠ μ₀
+H₃ : μ &gt; μ₀
+</code></pre><p>所以, 如果说 <code>TS (Test Statistic) = (X - μ) / (s/√n)</code> 的话, 以下的情况就分别可以 Reject H₀:</p>
+<pre><code> TS  ≤ Zₐ
+|TS| ≥ Z₁₋ₐ∕₂
+ TS  ≥ Z₁₋ₐ
+</code></pre><h3 id="和-Confidence-Interval-的关系"><a href="#和-Confidence-Interval-的关系" class="headerlink" title="和 Confidence Interval 的关系"></a>和 Confidence Interval 的关系</h3><p>对于 μ 来说, (1 - α) * 100% 的 confidence interval 范围内的所有的值, 都无法 (Failed to) Reject H₀.</p>
+<h2 id="P-values"><a href="#P-values" class="headerlink" title="P-values"></a>P-values</h2><p>P-value 就是在 H₀ 的前提下, 观测到的样本值出现的可能性.  如果这个可能性很少, 要么 H₀ 为真, 并且我们观测到的值很极端, 要么 H₀ 为假.</p>
+<p>P-value 和 α (level of significance) 是不同的.  P-value 只是简单描述了在 H₀ 情况下, 某值出现的可能性. α 则是我们选定的用来判定是否 Reject H₀ 的标准.  当 P-value 小于 α 的时候，我们就可以 Reject H₀.</p>
+<p>two sided hypothesis test, double the smaller of the two “one sided hypothesis test P-values”.</p>
+<p>比如下面一个例子:</p>
+<p>有 18 位肥胖人士, 随机抽取 9 位服用新的减肥药, 9 位服用安慰剂.  4 星期后测量的 BMI 指数的平均变化为, 服用减肥药的为 -3kg/m2, 服用安慰剂的为 1kg/m2.  两组人员的标准差为 1.5kg/m2 和 1.8kg/m2.  那么现在的 BMI 变化对使不使用减肥药有区别吗?  假定数据是正态的, 并且 population variance 是相同的, 尝试给出 two sided t test 的 P-value.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">n1 &lt;- n2 &lt;- <span class="number">9</span></div><div class="line">x1 &lt;- -<span class="number">3</span>  <span class="comment">## treated</span></div><div class="line">x2 &lt;- <span class="number">1</span>  <span class="comment">## placebo</span></div><div class="line">s1 &lt;- <span class="number">1.5</span>  <span class="comment">## treated</span></div><div class="line">s2 &lt;- <span class="number">1.8</span>  <span class="comment">## placebo</span></div><div class="line">s &lt;- sqrt(((n1 - <span class="number">1</span>) * s1^<span class="number">2</span> + (n2 - <span class="number">1</span>) * s2^<span class="number">2</span>)/(n1 + n2 - <span class="number">2</span>))  <span class="comment"># 恒定标准差, 独立分组的数据</span></div><div class="line">ts &lt;- (x1 - x2) / (s * sqrt(<span class="number">1</span>/n1 + <span class="number">1</span>/n2))  <span class="comment"># Test statistic</span></div><div class="line"><span class="number">2</span> * pt(ts, n1 + n2 - <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<h2 id="Power"><a href="#Power" class="headerlink" title="Power"></a>Power</h2><p>当事实为 Hₐ 时, 我们推测出的结果为 Hₐ 的可能性 (sensitivity).</p>
+<p>Power = 1 - β (Type II error rate)</p>
+<p>假如我们要推测的 Hₐ 为 μ &gt; μ₀:</p>
+<p>Power = P((X - μ₀) / (σ/√n) &gt; z₁₋ₐ | μ = μₐ)  # 当 μₐ 趋近 μ₀ 时, Power 趋近 α<br>      = P((X - μₐ + μₐ - μ₀) / (σ/√n) &gt; z₁₋ₐ | μ = μₐ)<br>      = P((X - μₐ) / (σ/√n) &gt; z₁₋ₐ - (μₐ - μ₀) / (σ/√n) | μ = μₐ)<br>      = P(Z &gt; z₁₋ₐ - (μₐ - μ₀) / (σ/√n) | μ = μₐ)<br>      = P(Z &gt; zβ)</p>
+<p><em>z₁₋ₐ 为标准正态分布在 α 的区域值如 1.645 (5%)</em></p>
+<p>假定在 H₀:μ = μ₀ 的情况下, 统计数据为 N(0, 1) 的正态分布, 那么在 Hₐ:μ = μₐ 的情况下, 统计数据就为 N((μₐ - μ₀) / (σ/√n), 1) 的正态分布.  所以，也可以通过 <code>pnorm(1.645, mean = (μₐ - μ₀) / (σ/√n), sd = 1, lower.tail = F)</code> 来计算出 Power.</p>
+<p>根据上面的推理, 我们还可以得出一个等式: <code>z₁₋ₐ - (μₐ - μ₀) / (σ/√n) = zβ</code>.<br>也就是说 Power 和 <code>(μₐ - μ₀) / (σ/√n)</code> 的比值相关.  <code>(μₐ - μ₀) / σ</code> 为 effect size.</p>
+<h2 id="Multiple-testing"><a href="#Multiple-testing" class="headerlink" title="Multiple testing"></a>Multiple testing</h2><h3 id="Types-of-Error"><a href="#Types-of-Error" class="headerlink" title="Types of Error"></a>Types of Error</h3><pre><code>              β = 0   β ≠ 0   Hypotheses
+Claim β = 0   U       T       m - R
+Claim β ≠ 0   V       S       R
+Claims        m₀      m - m₀  m
+</code></pre><p><strong>m</strong> - total number of hypotheses tested<br><strong>m₀</strong> - number of true H₀<br><strong>m - m₀</strong> - number of true Hₐ<br><strong>V</strong> - number of false positive (Type I error / false discoveries)<br><strong>S</strong> - number of true positive (true discoveries)<br><strong>T</strong> - number of false negative (Type II error)<br><strong>U</strong> - number of true negative<br><strong>R</strong> - number of rejected H₀</p>
+<h3 id="Error-Rates"><a href="#Error-Rates" class="headerlink" title="Error Rates"></a>Error Rates</h3><p><strong>False positive rate</strong> - The rate at which false results (β = 0) are called significant: E[V/m₀]<br><strong>Family wise error rate (FWER)</strong> - The probability of at least one false positive Pr(V ≥ 1)<br><strong>False discovery rate (FDR)</strong> - The rate at which claims of significance are false E[V/R]</p>
+<h3 id="Correction"><a href="#Correction" class="headerlink" title="Correction"></a>Correction</h3><p><strong>Controlling FWER</strong> - Bonferroni correction</p>
+<p>假定做 m 次测试, 要把 FWER 控制在 α, 也就是 Pr(V ≥ 1) &lt; α.<br>然后把新的 α 设置为 α / m, 所有小于这个新的 α 的 P-value 就是 significant 的.<br>这种方法的优点就是容易计算, 缺点就是得出的值会非常保守.</p>
+<p><strong>Controlling FDR</strong></p>
+<p>假定做 m 次测试, 要把 FDR 控制在 α, 也就是 E[V/R].<br>把 P-value 从小到大排好序 P(1), …, P(m), 任何 P(i) ≤ α * i/m 都是 significant 的.<br>这种方法的优点就是相对容易计算, 没那么保守, 缺点就是 false positive 可能性增加, 而且关联数据可能表现诡异.</p>
+<p><strong>Adjusted P-values</strong></p>
+<p>注意, 修正过的就已经不能算是 P-values 了.<br>假定我们有 P(1), …, P(m), 我们可以把每一个 P-values * m, 最大值为 1. 如果得出来的值小于 α, 那就是在 Control FWER 上是 significant 的.</p>
+<h2 id="Resampled-inference"><a href="#Resampled-inference" class="headerlink" title="Resampled inference"></a>Resampled inference</h2><p>不断的从已有数据集中取数据出来创造新的数据集.  R 里面有两个很有用的工具:</p>
+<h3 id="jackknife"><a href="#jackknife" class="headerlink" title="jackknife"></a>jackknife</h3><p>原理是从一组数据中每次删除一个值, 然后用剩下的 (n - 1) 个数据来计算推测要推导的结论.  所以也就是说会有 n 种数据组合和 n 次推导值.  这种做法通常会用在推算偏差和标准误上面.  像中值 (mean) 这种 unbiased 的数据是不用 jackknife 来做的.</p>
+<p>计算过程是这样的:</p>
+<ul>
+<li>X₁, …, Xₙ 是一组测量数据值</li>
+<li>假定 θ 是用以上数据全集推导出来的值 (比如 median)</li>
+<li>θᵢ 是把 Xᵢ 删除后推导出来的值</li>
+<li>假定 θbar = 1/n * ∑ⁿθᵢ</li>
+</ul>
+<p>jackknife 算出来的偏差就是 <code>(n - 1) * (θbar - θ)</code>, 标准误就是 <code>[(n - 1)/n * ∑ⁿ(θᵢ - θbar)²] ^ 0.5</code></p>
+<h3 id="bootstrap"><a href="#bootstrap" class="headerlink" title="bootstrap"></a>bootstrap</h3><p>bootstrap 是 non-parametric 的.  通常用于 confidence internal 和标准误上面.  bootstrap 原则是指 using the distribution defined by the data to approximate its sampling distribution.</p>
+<p>实际操作上来说, bootstrap 原则都是通过模拟来的执行的.  一般都是不断的从观测的数据中取样计算分布状况, 来模拟完整的数据集的分布.<br>从多次的模拟计算中得到的统计概率去计算 confidence interval 或者标准误.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(UsingR)</div><div class="line"><span class="keyword">library</span>(bootstrap)</div><div class="line">data(father.son)</div><div class="line"></div><div class="line">x &lt;- father.son$sheight</div><div class="line">n &lt;- length(x)</div><div class="line">B &lt;- <span class="number">1000</span></div><div class="line"></div><div class="line">resamples &lt;- matrix(sample(x, n * B, replace = <span class="literal">TRUE</span>), B, n)</div><div class="line">medians &lt;- apply(resamples, <span class="number">1</span>, median)</div><div class="line">sd(medians)</div><div class="line"><span class="comment">## [1] 0.08452927</span></div><div class="line"></div><div class="line">quantile(medians, c(<span class="number">0.025</span>, <span class="number">0.975</span>))</div><div class="line"><span class="comment">##     2.5%    97.5%</span></div><div class="line"><span class="comment">## 68.44474 68.81588</span></div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Statistics/">Statistics</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/" data-title="Statistical Inference 课后小结 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/04/2014-retrospect-and-2015-goal-setting/" title="2014 Retrospect and 2015 Goal Setting">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  2014 Retrospect and 2015 Goal Setting</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/31/half-year-summary/"  title="2014 半年小结">
+ <strong>NEXT:</strong><br/> 
+ <span>2014 半年小结
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概率"><span class="toc-number">1.</span> <span class="toc-text">概率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条件概率-Conditional-Probability"><span class="toc-number">1.1.</span> <span class="toc-text">条件概率 (Conditional Probability)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bayes’-rule"><span class="toc-number">1.2.</span> <span class="toc-text">Bayes’ rule</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#诊断测试-Diagnostic-test"><span class="toc-number">1.3.</span> <span class="toc-text">诊断测试 (Diagnostic test)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期望值-Expected-Value"><span class="toc-number">2.</span> <span class="toc-text">期望值 (Expected Value)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean"><span class="toc-number">2.1.</span> <span class="toc-text">Mean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差-Variance"><span class="toc-number">2.2.</span> <span class="toc-text">方差 (Variance)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的概率分布模型"><span class="toc-number">3.</span> <span class="toc-text">常见的概率分布模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伯努利分布-Bernoulli-distribution"><span class="toc-number">3.1.</span> <span class="toc-text">伯努利分布 (Bernoulli distribution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正态分布-Normal-distribution"><span class="toc-number">3.2.</span> <span class="toc-text">正态分布 (Normal distribution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Poisson-distribution"><span class="toc-number">3.3.</span> <span class="toc-text">(Poisson distribution)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#渐近-Asymptotics"><span class="toc-number">4.</span> <span class="toc-text">渐近 (Asymptotics)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大数定律-Law-of-Large-Number"><span class="toc-number">4.1.</span> <span class="toc-text">大数定律 (Law of Large Number)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中心极限定理-Central-Limit-Theorem"><span class="toc-number">4.2.</span> <span class="toc-text">中心极限定理 (Central Limit Theorem)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Confidence-Intervals"><span class="toc-number">4.3.</span> <span class="toc-text">Confidence Intervals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T-Confidence-Intervals"><span class="toc-number">4.4.</span> <span class="toc-text">T Confidence Intervals</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hypothesis-testing"><span class="toc-number">5.</span> <span class="toc-text">Hypothesis testing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">5.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误类型"><span class="toc-number">5.2.</span> <span class="toc-text">错误类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upper-Lower-and-Two-Failed-Test"><span class="toc-number">5.3.</span> <span class="toc-text">Upper, Lower, and Two Failed Test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#和-Confidence-Interval-的关系"><span class="toc-number">5.4.</span> <span class="toc-text">和 Confidence Interval 的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P-values"><span class="toc-number">6.</span> <span class="toc-text">P-values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Power"><span class="toc-number">7.</span> <span class="toc-text">Power</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-testing"><span class="toc-number">8.</span> <span class="toc-text">Multiple testing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Types-of-Error"><span class="toc-number">8.1.</span> <span class="toc-text">Types of Error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Error-Rates"><span class="toc-number">8.2.</span> <span class="toc-text">Error Rates</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Correction"><span class="toc-number">8.3.</span> <span class="toc-text">Correction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resampled-inference"><span class="toc-number">9.</span> <span class="toc-text">Resampled inference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jackknife"><span class="toc-number">9.1.</span> <span class="toc-text">jackknife</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bootstrap"><span class="toc-number">9.2.</span> <span class="toc-text">bootstrap</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>28</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>50</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/tags/Adapt/" style="font-size: 10px;">Adapt</a> <a href="/tags/Adoption/" style="font-size: 10px;">Adoption</a> <a href="/tags/Ajax/" style="font-size: 11.25px;">Ajax</a> <a href="/tags/Analytical-Reading/" style="font-size: 10px;">Analytical Reading</a> <a href="/tags/AngularJS/" style="font-size: 16.25px;">AngularJS</a> <a href="/tags/Async/" style="font-size: 10px;">Async</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Believe/" style="font-size: 10px;">Believe</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 15px;">Book</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Calisthenics/" style="font-size: 10px;">Calisthenics</a> <a href="/tags/Callback/" style="font-size: 10px;">Callback</a> <a href="/tags/Change/" style="font-size: 13.75px;">Change</a> <a href="/tags/Coding/" style="font-size: 12.5px;">Coding</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/Critical-Thinking/" style="font-size: 10px;">Critical Thinking</a> <a href="/tags/DB/" style="font-size: 10px;">DB</a> <a href="/tags/Delegation/" style="font-size: 11.25px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.25px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.25px;">Destiny</a> <a href="/tags/Directive/" style="font-size: 11.25px;">Directive</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Execution-context/" style="font-size: 10px;">Execution context</a> <a href="/tags/Experience/" style="font-size: 11.25px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 10px;">ExtJS</a> <a href="/tags/ExtJs/" style="font-size: 17.5px;">ExtJs</a> <a href="/tags/Flow/" style="font-size: 11.25px;">Flow</a> <a href="/tags/Function-definition/" style="font-size: 10px;">Function definition</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/GTD/" style="font-size: 11.25px;">GTD</a> <a href="/tags/Goal/" style="font-size: 15px;">Goal</a> <a href="/tags/Habit/" style="font-size: 10px;">Habit</a> <a href="/tags/HangJS/" style="font-size: 10px;">HangJS</a> <a href="/tags/Health/" style="font-size: 10px;">Health</a> <a href="/tags/HttpBackend/" style="font-size: 11.25px;">HttpBackend</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a> <a href="/tags/JAWR/" style="font-size: 10px;">JAWR</a> <a href="/tags/JSConf/" style="font-size: 11.25px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 11.25px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 17.5px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/JingJS/" style="font-size: 10px;">JingJS</a> <a href="/tags/Kanban/" style="font-size: 16.25px;">Kanban</a> <a href="/tags/Lead-Time/" style="font-size: 10px;">Lead Time</a> <a href="/tags/Leadership/" style="font-size: 11.25px;">Leadership</a> <a href="/tags/Loop/" style="font-size: 11.25px;">Loop</a> <a href="/tags/Management/" style="font-size: 17.5px;">Management</a> <a href="/tags/Maven/" style="font-size: 11.25px;">Maven</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 13.75px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/NodeJS/" style="font-size: 16.25px;">NodeJS</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Permanent/" style="font-size: 10px;">Permanent</a> <a href="/tags/Pomodoro/" style="font-size: 10px;">Pomodoro</a> <a href="/tags/Process/" style="font-size: 10px;">Process</a> <a href="/tags/Productivity/" style="font-size: 11.25px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 12.5px;">Promise</a> <a href="/tags/Prototype/" style="font-size: 10px;">Prototype</a> <a href="/tags/Prototype-Chain/" style="font-size: 10px;">Prototype Chain</a> <a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a> <a href="/tags/Retrospect/" style="font-size: 18.75px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Sinon-js/" style="font-size: 11.25px;">Sinon.js</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/String-interpolation/" style="font-size: 10px;">String interpolation</a> <a href="/tags/Stuff/" style="font-size: 10px;">Stuff</a> <a href="/tags/Tail-Call-Optimization/" style="font-size: 10px;">Tail Call Optimization</a> <a href="/tags/Thunk/" style="font-size: 10px;">Thunk</a> <a href="/tags/Time-Management/" style="font-size: 11.25px;">Time Management</a> <a href="/tags/Trampoline/" style="font-size: 10px;">Trampoline</a> <a href="/tags/Trip/" style="font-size: 12.5px;">Trip</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/UnitTest/" style="font-size: 16.25px;">UnitTest</a> <a href="/tags/Value/" style="font-size: 10px;">Value</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Webassemble/" style="font-size: 10px;">Webassemble</a> <a href="/tags/Weblogic/" style="font-size: 10px;">Weblogic</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a> <a href="/tags/Workout/" style="font-size: 10px;">Workout</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/browserify/" style="font-size: 10px;">browserify</a> <a href="/tags/bundling/" style="font-size: 10px;">bundling</a> <a href="/tags/i18n/" style="font-size: 11.25px;">i18n</a> <a href="/tags/ngClass/" style="font-size: 10px;">ngClass</a> <a href="/tags/ngRepeat/" style="font-size: 10px;">ngRepeat</a> <a href="/tags/this/" style="font-size: 10px;">this</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>

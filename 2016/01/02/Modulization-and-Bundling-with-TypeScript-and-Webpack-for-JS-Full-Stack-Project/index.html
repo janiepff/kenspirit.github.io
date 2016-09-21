@@ -1,0 +1,442 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="ModulizationIn a Full Stack JS project, the essence is how to write code consistently and easy to share and maintain because code sharing between serv">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/" title="Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project" itemprop="url">Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-01-02T08:09:39.000Z" itemprop="datePublished">Jan 2 2016</time>
+    Updated:<time datetime="2016-09-21T15:33:12.000Z" itemprop="dateModified">Sep 21 2016</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modulization"><span class="toc-number">1.</span> <span class="toc-text">Modulization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ancient-history"><span class="toc-number">1.1.</span> <span class="toc-text">Ancient history</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Package-Namespace-Concept"><span class="toc-number">1.2.</span> <span class="toc-text">Package/Namespace Concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immediately-Invoked-Function-Expression-IIFE"><span class="toc-number">1.3.</span> <span class="toc-text">Immediately-Invoked-Function-Expression (IIFE)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS-Node-js"><span class="toc-number">1.4.</span> <span class="toc-text">CommonJS/Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD-CMD"><span class="toc-number">1.5.</span> <span class="toc-text">AMD/CMD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6"><span class="toc-number">1.6.</span> <span class="toc-text">ES6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#My-strategy"><span class="toc-number">1.7.</span> <span class="toc-text">My strategy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bundling"><span class="toc-number">2.</span> <span class="toc-text">Bundling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TypeScript-config-amp-folder-structure"><span class="toc-number">2.1.</span> <span class="toc-text">TypeScript config & folder structure</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Webpack-integration"><span class="toc-number">2.2.</span> <span class="toc-text">Webpack integration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gulp-Integration"><span class="toc-number">2.3.</span> <span class="toc-text">Gulp Integration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-dependency"><span class="toc-number">2.4.</span> <span class="toc-text">CSS dependency</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="Modulization"><a href="#Modulization" class="headerlink" title="Modulization"></a>Modulization</h2><p>In a Full Stack JS project, the essence is how to write code consistently and easy to share and maintain because code sharing between server and browser is unavoidably.  Before talking about what strategy we are taking, let’s have a review on the trend of the modulization first.</p>
+<h3 id="Ancient-history"><a href="#Ancient-history" class="headerlink" title="Ancient history"></a>Ancient history</h3><p>There is no such thing and all things are global.  This causes potentially naming conflict and it’s not good for maintenance.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> logo = <span class="string">'KanbanizeIT'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  alert(logo + <span class="string">' wish you a happy new year, '</span> + name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Package-Namespace-Concept"><a href="#Package-Namespace-Concept" class="headerlink" title="Package/Namespace Concept"></a>Package/Namespace Concept</h3><p>Some well-known library, like ExtJS, takes package/namespace concept and they manage the source in this structure.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Ext.ns(<span class="string">'com.kanbanizeit'</span>);</div><div class="line"></div><div class="line">Ext.apply(com.kanbanizeit.SubModule, &#123;</div><div class="line">  oneThousand: <span class="number">1024</span>,</div><div class="line">  oneThousandInComputer: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> oneThousand;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Immediately-Invoked-Function-Expression-IIFE"><a href="#Immediately-Invoked-Function-Expression-IIFE" class="headerlink" title="Immediately-Invoked-Function-Expression (IIFE)"></a>Immediately-Invoked-Function-Expression (IIFE)</h3><p>This approach reduce the hassle of long namespace and groups all internal stuffs encapsulated.  Many small library adopts this style, e.g. jQuery.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> kanbanizeIT = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> privateField = <span class="number">1024</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    publicStuff: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> privateField;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h3 id="CommonJS-Node-js"><a href="#CommonJS-Node-js" class="headerlink" title="CommonJS/Node.js"></a>CommonJS/Node.js</h3><p>This style went popular due to the popularity of Node.js.  Each file is a module and all variables defined within that file are only visible in that file.  If you have public API want to publish, you need to export it.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// logo.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="string">'KanbanizeIT'</span>;</div><div class="line"></div><div class="line"><span class="comment">// sayHello.js</span></div><div class="line"><span class="keyword">var</span> logo = <span class="built_in">require</span>(<span class="string">'./logo'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  sayHello: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'Welcome to join '</span> + logo;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="AMD-CMD"><a href="#AMD-CMD" class="headerlink" title="AMD/CMD"></a>AMD/CMD</h3><p>CommonJS is suited for server-side JS loading because it’s synchronous file loading in Node.js.  But for browser, script loading is asynchronous and so other groups of people propose different styles target for browser-side JS loading.</p>
+<p><a href="http://www.requirejs.org/" target="_blank" rel="external">RequireJS</a> is the representative for AMD style.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</div><div class="line">  a.doSomething();</div><div class="line"></div><div class="line">  b.doAnotherThing();</div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<p><a href="http://seajs.org/docs/en.html" target="_blank" rel="external">sea.js</a> is the representative for CMD style.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)) </span>&#123;</div><div class="line">  <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'a'</span>);</div><div class="line">  a.doSomething();</div><div class="line"></div><div class="line">  <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</div><div class="line">  b.doAnotherThing();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h3><p>The latest ECMAScript 6 standard has below syntax.  However, this is not supported in most of the JS execution environment yet.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// xxx.js</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</div><div class="line"></div><div class="line"><span class="comment">// yyy.js</span></div><div class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">'./xxx'</span>;</div></pre></td></tr></table></figure>
+<h3 id="My-strategy"><a href="#My-strategy" class="headerlink" title="My strategy"></a>My strategy</h3><p>About 2 years ago, I wrote an article “<a href="http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>“ about this topic already.  At that time, I explain why I decided to choose to write the code in Node.js style and then use tools like <a href="https://github.com/substack/node-browserify" target="_blank" rel="external">browserify</a> (Now we has Webpack too) to do the bundling for browser.  I still consider my choice is the right way to go.  </p>
+<p>Now I just changed to <strong>write all JavaScript in ES6 format no matter for browser-side or server-side</strong>, then do the bundling for browser.  This choice enables me to have consistent coding style regardless which environment it’s targeted to.  One more reason for me to abandon the hassle introduced from AMD or CMD is that when the HTTP2 era comes, I have no need to do the bundling anymore and just have to skip this step without changing any code.</p>
+<p>But browser doesn’t support ES6 syntax now.  No worry, you should use a transpiler.  Checkout my article <a href="http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/">TypeScript vs Babel</a> if you know nothing about it.</p>
+<h2 id="Bundling"><a href="#Bundling" class="headerlink" title="Bundling"></a>Bundling</h2><p>To me, <strong>The No. 1 principle of bundling is <a href="https://en.wikipedia.org/wiki/Single_Source_of_Truth" target="_blank" rel="external">Single Source of Truth</a></strong>.</p>
+<p>How is that?  Normally, we need to have some configuration to define a bundle name and file selectors to decide what files to be included in the bundle, like the <a href="https://jawr.java.net/" target="_blank" rel="external">JAWR</a> used in my company.  It is really ugly and error-prone.</p>
+<p>Now, if we make use of the modulization and control the dependency through ES6 <code>import</code> and <code>export</code>, then we can base on this relationship to control the bundling as well.  What we need to do is to specify a bootstrap JS file as entry point and let the tools to figure out all dependencies to be included.  No other configuration should be needed unless special requirement is raised, such as bundle splitting for lazy load, etc.  </p>
+<p>Hence, <strong>the dependency specified in the source code itself should be the only single truth</strong>.  </p>
+<h3 id="TypeScript-config-amp-folder-structure"><a href="#TypeScript-config-amp-folder-structure" class="headerlink" title="TypeScript config &amp; folder structure"></a>TypeScript config &amp; folder structure</h3><p>Sample <code>tsconfig.json</code> setting is as below which compiles all TypeScript source to be compatible with ES5 standard and use CommonJS style for module usage.  Folder structure is simply separated to <code>common</code>, <code>client</code> and <code>server</code> for illustrating purpose.  You can further arrange based on your preference.  </p>
+<p>The compiled source is output to <code>build</code> directory and retains the original folder structure.</p>
+<p><img alt="Source Folder Structure" src="http://77g8zm.com1.z0.glb.clouddn.com/js_typescript_folder_structure.png" style="position: relative; float: right; margin-left: 5px; border: 0px; padding: 0px;"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"compilerOptions"</span>: &#123;</div><div class="line">    <span class="attr">"target"</span>: <span class="string">"es5"</span>,</div><div class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</div><div class="line">    <span class="attr">"outDir"</span>: <span class="string">"build"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"exclude"</span>: [</div><div class="line">    <span class="string">"node_modules"</span>,</div><div class="line">    <span class="string">"dist"</span>,</div><div class="line">    <span class="string">"build"</span></div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Webpack-integration"><a href="#Webpack-integration" class="headerlink" title="Webpack integration"></a>Webpack integration</h3><p>When integrating Webpack with TypeScript support, we need to use <code>ts-loader</code> to compile the <code>.ts</code> file.  Sample <code>webpack.config.js</code> is as below when I am testing to bundle the client-side JavaScript for browser usage:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>),</div><div class="line">    path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    context: __dirname + <span class="string">'/src'</span>,</div><div class="line">    entry: &#123;</div><div class="line">      index: <span class="string">'./client/index'</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: __dirname + <span class="string">'/dist'</span>,</div><div class="line">        publicPath: <span class="string">'/'</span>,</div><div class="line">        filename: <span class="string">'[name].bundle.js'</span></div><div class="line">    &#125;,</div><div class="line">    resolve: &#123;</div><div class="line">      root: __dirname,</div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.ts'</span>, <span class="string">'.js'</span>]</div><div class="line">    &#125;,</div><div class="line">    <span class="built_in">module</span>: &#123;</div><div class="line">      loaders: [</div><div class="line">        &#123; test: <span class="regexp">/\.ts$/</span>, loaders: [<span class="string">'ts-loader'</span>], exclude: <span class="regexp">/node_modules/</span> &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>There are two issues discovered after the testing:</p>
+<ul>
+<li>Any compile warning can possibly block the webpack build process.  To fix this, we can add a <code>ts</code> config in webpack and ignore some particular errors.  </li>
+</ul>
+<p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_typescript_error.png" alt="TypeScript Warning"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  ts: &#123;</div><div class="line">    ignoreDiagnostics: [<span class="number">2339</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Normally, we only need to bundle the code for browser, so the webpack <code>entry</code> only specify entries for client-side script.  Even though the <code>ts-loader</code> still use the <code>tsconfig.json</code> to compile all TypeScript, the compiled TypeScript is not output to the <code>outDir</code> specified in <code>tsconfig.json</code> and so the server-side TypeScript is not compiled to JavaScript.  Then how can Node.js use the TypeScript then?  </li>
+</ul>
+<p>There is one approach to use <a href="https://github.com/theblacksmith/typescript-require" target="_blank" rel="external">typescript-require</a> extension and put <code>require(‘typescript-require’);</code> to the bootstrap entry js executed by Node.js, <code>.ts</code> module can be loaded just like the <code>.js</code> module.</p>
+<p>However, I don’t want to go with it because it introduces some exception (Entry <code>.js</code> file for Node.js and this special extension).  I still want all TypeScript source be compiled out to a build folder with exact folder structure.</p>
+<h3 id="Gulp-Integration"><a href="#Gulp-Integration" class="headerlink" title="Gulp Integration"></a>Gulp Integration</h3><p>I have to bring in Gulp to control the process instead.  First compiles all TypeScript and then calls Webpack to do the bundling by pointing to the <code>build</code> folder instead of original <code>src</code> folder.  Hence, <code>ts-loader</code> in <code>webpack.config.js</code> is not necessary anymore.</p>
+<p><code>gulpfile.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'./gulp'</span>);</div></pre></td></tr></table></figure>
+<p><code>index.js</code> under gulp folder.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"></div><div class="line"><span class="built_in">require</span>(<span class="string">'./typescript'</span>);</div><div class="line"><span class="built_in">require</span>(<span class="string">'./webpack'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'default'</span>, [<span class="string">'typescript'</span>, <span class="string">'webpack'</span>]);</div></pre></td></tr></table></figure>
+<p><code>typescript.js</code> under gulp folder.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"><span class="keyword">var</span> ts = <span class="built_in">require</span>(<span class="string">'gulp-typescript'</span>);</div><div class="line"><span class="keyword">var</span> tsconfig = <span class="built_in">require</span>(process.cwd() + <span class="string">'/tsconfig.json'</span>);</div><div class="line"><span class="keyword">var</span> tsProject = ts.createProject(<span class="string">'tsconfig.json'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'typescript'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> tsResult = tsProject.src() <span class="comment">// instead of gulp.src(...) </span></div><div class="line">    .pipe(ts(tsProject));</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> tsResult.js.pipe(gulp.dest(tsconfig.compilerOptions.outDir));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><code>webpack.js</code> under gulp folder.  To be aware that the <code>webpack</code> task has defined a dependency on <code>typescript</code> task so that it will waits under the <code>typescript</code> task to complete before it starts.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"><span class="keyword">var</span> gutil = <span class="built_in">require</span>(<span class="string">'gulp-util'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> webpackConfig = <span class="built_in">require</span>(process.cwd() + <span class="string">'/webpack.config'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'webpack'</span>, [<span class="string">'typescript'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123;</div><div class="line">    <span class="comment">// run webpack</span></div><div class="line">    webpack(webpackConfig, <span class="function"><span class="keyword">function</span>(<span class="params">err, stats</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span>(err) <span class="keyword">throw</span> <span class="keyword">new</span> gutil.PluginError(<span class="string">'webpack'</span>, err);</div><div class="line">        gutil.log(<span class="string">'[webpack]'</span>, stats.toString(&#123;</div><div class="line">            <span class="comment">// output options</span></div><div class="line">        &#125;));</div><div class="line">        callback();</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The execution is as below.</p>
+<p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp.png" alt="Gulp and Webpack"></p>
+<p>Till now, you should have basic idea on how to work with TypeScript and Webpack for JavaScript full stack project.  But there is one more thing, how about CSS?  Can it be the same?</p>
+<h3 id="CSS-dependency"><a href="#CSS-dependency" class="headerlink" title="CSS dependency"></a>CSS dependency</h3><p>For example, my app uses AngularJS and Bootstrap and I want to include them all like below.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// &lt;reference path="typings/angularjs/angular.d.ts" /&gt;</span></div><div class="line"><span class="comment">// &lt;reference path="typings/angularjs/angular-route.d.ts" /&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">'angular'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'angular-route'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'angular-ui-bootstrap'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'bootstrap.css'</span>;</div></pre></td></tr></table></figure>
+<p>How can I setup the Webpack and bundle all dependencies?  Here is the complete <code>webpack.config.js</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>),</div><div class="line">    ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>),</div><div class="line">    HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>),</div><div class="line">    path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    context: __dirname + <span class="string">'/build/src'</span>,</div><div class="line">    entry: &#123;</div><div class="line">      index: <span class="string">'./client/index'</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: __dirname + <span class="string">'/dist'</span>,</div><div class="line">        publicPath: <span class="string">'/'</span>,</div><div class="line">        filename: <span class="string">'[name].bundle.js'</span></div><div class="line">    &#125;,</div><div class="line">    resolve: &#123;</div><div class="line">      alias: &#123;</div><div class="line">        <span class="string">'bootstrap.css'</span>: path.join(__dirname, <span class="string">'/node_modules/bootstrap/dist/css/bootstrap.min.css'</span>)</div><div class="line">      &#125;,</div><div class="line">      root: __dirname,</div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.css'</span>, <span class="string">'.js'</span>]</div><div class="line">    &#125;,</div><div class="line">    <span class="built_in">module</span>: &#123;</div><div class="line">      loaders: [</div><div class="line">        &#123;</div><div class="line">            test: <span class="regexp">/\.(eot|woff|woff2|ttf|svg|png|jpg)$/</span>,</div><div class="line">            loader: <span class="built_in">require</span>.resolve(<span class="string">"url-loader"</span>) + <span class="string">'?name=[name]-[hash].[ext]'</span></div><div class="line">        &#125;</div><div class="line">        , &#123; test: <span class="regexp">/\.css$/</span>, loader: ExtractTextPlugin.extract(<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>) &#125;</div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    plugins: [</div><div class="line">      <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">        inject: <span class="literal">true</span>,</div><div class="line">        template: <span class="string">'./src/client/index.html'</span>,</div><div class="line">        chunks: [<span class="string">'index'</span>]</div><div class="line">      &#125;)</div><div class="line">      , <span class="keyword">new</span> ExtractTextPlugin(<span class="string">'[name].css'</span>, &#123;</div><div class="line">        allChunks: <span class="literal">true</span></div><div class="line">      &#125;)</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>There are couples of setting took me a while to figure out.</p>
+<ol>
+<li><p><code>alias</code> for <code>bootstrap.css</code> is necessary so that it can be correctly resolved.  </p>
+</li>
+<li><p>Without the <code>require.resolve(&quot;url-loader&quot;)</code>, when parsing the CSS file, it complaints <code>Cannot resolve module &#39;url-loader&#39;</code>.  </p>
+</li>
+<li><p><code>ExtractTextPlugin</code> is used to output the CSS as a separated file instead of being embedded in the bundled JS and dynamically generated as a <code>&lt;style&gt;</code> tag in HTML file during page load.</p>
+</li>
+<li><p><code>HtmlWebpackPlugin</code> is used to automatically inject the generated CSS and JS files into the appropriate location in the entry HTML file as below.</p>
+</li>
+</ol>
+<p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp_final_result.png" alt="Final HTML result"></p>
+<p>I haven’t talked about how to include internal CSS or HTML yet.  However, I think you can figure out yourself based on the sample and strategy described here.  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/AngularJS/">AngularJS</a><a href="/tags/TypeScript/">TypeScript</a><a href="/tags/Webpack/">Webpack</a><a href="/tags/browserify/">browserify</a><a href="/tags/bundling/">bundling</a><a href="/tags/CSS/">CSS</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/" data-title="Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/03/08/How-to-delegate/" title="如何授权和分配工作">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  如何授权和分配工作</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/12/31/2015-retrospect-and-2016-goal-setting/"  title="2015 Retrospect and 2016 Goal Setting">
+ <strong>NEXT:</strong><br/> 
+ <span>2015 Retrospect and 2016 Goal Setting
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modulization"><span class="toc-number">1.</span> <span class="toc-text">Modulization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ancient-history"><span class="toc-number">1.1.</span> <span class="toc-text">Ancient history</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Package-Namespace-Concept"><span class="toc-number">1.2.</span> <span class="toc-text">Package/Namespace Concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immediately-Invoked-Function-Expression-IIFE"><span class="toc-number">1.3.</span> <span class="toc-text">Immediately-Invoked-Function-Expression (IIFE)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS-Node-js"><span class="toc-number">1.4.</span> <span class="toc-text">CommonJS/Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD-CMD"><span class="toc-number">1.5.</span> <span class="toc-text">AMD/CMD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6"><span class="toc-number">1.6.</span> <span class="toc-text">ES6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#My-strategy"><span class="toc-number">1.7.</span> <span class="toc-text">My strategy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bundling"><span class="toc-number">2.</span> <span class="toc-text">Bundling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TypeScript-config-amp-folder-structure"><span class="toc-number">2.1.</span> <span class="toc-text">TypeScript config & folder structure</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Webpack-integration"><span class="toc-number">2.2.</span> <span class="toc-text">Webpack integration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gulp-Integration"><span class="toc-number">2.3.</span> <span class="toc-text">Gulp Integration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-dependency"><span class="toc-number">2.4.</span> <span class="toc-text">CSS dependency</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>28</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>50</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/tags/Adapt/" style="font-size: 10px;">Adapt</a> <a href="/tags/Adoption/" style="font-size: 10px;">Adoption</a> <a href="/tags/Ajax/" style="font-size: 11.25px;">Ajax</a> <a href="/tags/Analytical-Reading/" style="font-size: 10px;">Analytical Reading</a> <a href="/tags/AngularJS/" style="font-size: 16.25px;">AngularJS</a> <a href="/tags/Async/" style="font-size: 10px;">Async</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Believe/" style="font-size: 10px;">Believe</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 15px;">Book</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Calisthenics/" style="font-size: 10px;">Calisthenics</a> <a href="/tags/Callback/" style="font-size: 10px;">Callback</a> <a href="/tags/Change/" style="font-size: 13.75px;">Change</a> <a href="/tags/Coding/" style="font-size: 12.5px;">Coding</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/Critical-Thinking/" style="font-size: 10px;">Critical Thinking</a> <a href="/tags/DB/" style="font-size: 10px;">DB</a> <a href="/tags/Delegation/" style="font-size: 11.25px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.25px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.25px;">Destiny</a> <a href="/tags/Directive/" style="font-size: 11.25px;">Directive</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Execution-context/" style="font-size: 10px;">Execution context</a> <a href="/tags/Experience/" style="font-size: 11.25px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 10px;">ExtJS</a> <a href="/tags/ExtJs/" style="font-size: 17.5px;">ExtJs</a> <a href="/tags/Flow/" style="font-size: 11.25px;">Flow</a> <a href="/tags/Function-definition/" style="font-size: 10px;">Function definition</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/GTD/" style="font-size: 11.25px;">GTD</a> <a href="/tags/Goal/" style="font-size: 15px;">Goal</a> <a href="/tags/Habit/" style="font-size: 10px;">Habit</a> <a href="/tags/HangJS/" style="font-size: 10px;">HangJS</a> <a href="/tags/Health/" style="font-size: 10px;">Health</a> <a href="/tags/HttpBackend/" style="font-size: 11.25px;">HttpBackend</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a> <a href="/tags/JAWR/" style="font-size: 10px;">JAWR</a> <a href="/tags/JSConf/" style="font-size: 11.25px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 11.25px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 17.5px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/JingJS/" style="font-size: 10px;">JingJS</a> <a href="/tags/Kanban/" style="font-size: 16.25px;">Kanban</a> <a href="/tags/Lead-Time/" style="font-size: 10px;">Lead Time</a> <a href="/tags/Leadership/" style="font-size: 11.25px;">Leadership</a> <a href="/tags/Loop/" style="font-size: 11.25px;">Loop</a> <a href="/tags/Management/" style="font-size: 17.5px;">Management</a> <a href="/tags/Maven/" style="font-size: 11.25px;">Maven</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 13.75px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/NodeJS/" style="font-size: 16.25px;">NodeJS</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Permanent/" style="font-size: 10px;">Permanent</a> <a href="/tags/Pomodoro/" style="font-size: 10px;">Pomodoro</a> <a href="/tags/Process/" style="font-size: 10px;">Process</a> <a href="/tags/Productivity/" style="font-size: 11.25px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 12.5px;">Promise</a> <a href="/tags/Prototype/" style="font-size: 10px;">Prototype</a> <a href="/tags/Prototype-Chain/" style="font-size: 10px;">Prototype Chain</a> <a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a> <a href="/tags/Retrospect/" style="font-size: 18.75px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Sinon-js/" style="font-size: 11.25px;">Sinon.js</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/String-interpolation/" style="font-size: 10px;">String interpolation</a> <a href="/tags/Stuff/" style="font-size: 10px;">Stuff</a> <a href="/tags/Tail-Call-Optimization/" style="font-size: 10px;">Tail Call Optimization</a> <a href="/tags/Thunk/" style="font-size: 10px;">Thunk</a> <a href="/tags/Time-Management/" style="font-size: 11.25px;">Time Management</a> <a href="/tags/Trampoline/" style="font-size: 10px;">Trampoline</a> <a href="/tags/Trip/" style="font-size: 12.5px;">Trip</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/UnitTest/" style="font-size: 16.25px;">UnitTest</a> <a href="/tags/Value/" style="font-size: 10px;">Value</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Webassemble/" style="font-size: 10px;">Webassemble</a> <a href="/tags/Weblogic/" style="font-size: 10px;">Weblogic</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a> <a href="/tags/Workout/" style="font-size: 10px;">Workout</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/browserify/" style="font-size: 10px;">browserify</a> <a href="/tags/bundling/" style="font-size: 10px;">bundling</a> <a href="/tags/i18n/" style="font-size: 11.25px;">i18n</a> <a href="/tags/ngClass/" style="font-size: 10px;">ngClass</a> <a href="/tags/ngRepeat/" style="font-size: 10px;">ngRepeat</a> <a href="/tags/this/" style="font-size: 10px;">this</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>

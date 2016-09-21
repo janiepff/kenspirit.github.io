@@ -1,0 +1,432 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>学习编程需要具备的基本能力 - 抽象 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="很多人说，要学好编程，需要有抽象的能力。但抽象这个词本身就太抽象了。怎么样才叫有抽象的能力啊？。抽象是相对于具象而言的。我觉得，与其说学习编程要具备抽象的能力，不如说编程应该具备具象与抽象之间转换的能力。我们通过下面的例子来了解怎么在这两者之间转换吧。这篇文章对学编程的新手来说可能有点高能，但慢慢理">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="学习编程需要具备的基本能力 - 抽象 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/15/Capability-for-Learning-Programming-Abstraction/" title="学习编程需要具备的基本能力 - 抽象" itemprop="url">学习编程需要具备的基本能力 - 抽象</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-09-15T09:25:49.000Z" itemprop="datePublished">Sep 15 2016</time>
+    Updated:<time datetime="2016-09-21T15:25:55.000Z" itemprop="dateModified">Sep 21 2016</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据与算法"><span class="toc-number">1.</span> <span class="toc-text">数据与算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模式、范例"><span class="toc-number">2.</span> <span class="toc-text">模式、范例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令式、声明式"><span class="toc-number">2.1.</span> <span class="toc-text">命令式、声明式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面向对象、函数式"><span class="toc-number">2.2.</span> <span class="toc-text">面向对象、函数式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+		</div>
+		
+		<p>很多人说，要学好编程，需要有抽象的能力。但<em>抽象</em>这个词本身就太抽象了。怎么样才叫有抽象的能力啊？。<strong>抽象是相对于具象而言的</strong>。我觉得，与其说学习编程要具备抽象的能力，不如说<strong>编程应该具备具象与抽象之间转换的能力</strong>。我们通过下面的例子来了解怎么在这两者之间转换吧。这篇文章对学编程的新手来说可能有点高能，但慢慢理解。</p>
+<h2 id="数据与算法"><a href="#数据与算法" class="headerlink" title="数据与算法"></a>数据与算法</h2><p>一般来说，计算机和编程最终都会落实到解决生活的具体问题上。把这些生活的具象映射到计算机的程序代码里面，本身就是一次抽象的过程。最基本的抽象，莫过于把具象的物体，赋予抽象的数据和结构，当然还有处理这些数据的算法。数据结构和算法的简单类比和介绍，编程和写作的对比，可以参看之前的一篇文章<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a>。</p>
+<p>生活中我们很可能就会应用到一些算法。假如公司有 1000 人吧，打印了 1000 张有序号的表格发出去让大家填了。如果收回来都乱了，怎么能快速整理好？很简单，把小于 500 的放左边，大于 500 的放右边，先分开两块。然后再把两边的，再对半分。一直到最后两到某种程度，比如每一叠都只剩下 10 - 20 张的时候，稍微排一下序就好了。最后全部按顺序叠在一起就好。这种做法抽象出来就类似经典的<strong>快速排序</strong>算法。</p>
+<p>如果我们再往上抽象一层，其实它属于<strong>分治法</strong>（Divide and conquer）。根据 Wiki 的解释：</p>
+<blockquote>
+<p>“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。</p>
+</blockquote>
+<p>分治法是多分支<strong>递归</strong>的一种形态。很多人在学习编程的时候，会觉得递归非常难理解。但是，如果紧紧抓住这个分治法的核心，怎么把复杂问题分解成相似的子问题，并合并所有的子问题的解答，就会容易很多。</p>
+<p>比方说，我在自己正在写的 JavaScript 入门书里面举的例子，如果我们要计算 <code>1 + 2 + 3 + ... + 8 + 9 + 10</code> 这个算式怎么做？我们当然可以像人工点计算器那样，一直简单地重复加下去。但是，我们还可以换成这个思路来理解。上面的算式，其实也就是 <code>10</code> 和算式 <code>1 + 2 + 3 + ... + 8 + 9</code> 的和；算式 <code>1 + 2 + 3 + ... + 8 + 9</code> 其实又是 <code>9</code> 和算式 <code>1 + 2 + 3 + ... + 8</code> 的和，以此类推。</p>
+<p>这种思路其实就是分治的思路。那么，如果我们稍微抽象一下，用一个简单的符号来表示最开始那个要计算的算式，比如 <code>additionOfNumbersUpTo(10)</code>。它其实就等价于 <code>10 + additionOfNumbersUpTo(9)</code> 了。这样理解的话，你们应该就可以看懂这段用 JavaScript 写的递归函数代码了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">additionOfNumbersUpTo</span>(<span class="params">max</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (max == <span class="number">1</span>) &#123;</div><div class="line">    <span class="keyword">return</span> max</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> max + additionOfNumbersUpTo(max - <span class="number">1</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="模式、范例"><a href="#模式、范例" class="headerlink" title="模式、范例"></a>模式、范例</h2><p>学习编程语言，最常听到的就是各种模式或者范式。下面简单抽几个最出名的例子来说明一下。</p>
+<h3 id="命令式、声明式"><a href="#命令式、声明式" class="headerlink" title="命令式、声明式"></a>命令式、声明式</h3><p>编程语言有两大范式：命令式和声明式。怎么理解呢？我们继续看具体的例子。比如说，我们要实现一个简单的网页效果，在浏览器上显示如下的文本样式。  </p>
+<ul>
+<li>Cake  </li>
+<li>Fruit  </li>
+<li>Steak  </li>
+</ul>
+<p><strong>命令式写法</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"foodList"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">  <span class="keyword">var</span> food = [<span class="string">'Cake'</span>, <span class="string">'Fruit'</span>, <span class="string">'Steak'</span>]</div><div class="line"></div><div class="line">  <span class="keyword">var</span> foodListElement = <span class="built_in">document</span>.getElementById(<span class="string">'foodList'</span>)</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; food.length; i++) &#123;</div><div class="line">    <span class="keyword">var</span> child = <span class="built_in">document</span>.createElement(<span class="string">'li'</span>)</div><div class="line">    child.innerHTML = food[i]</div><div class="line">    foodListElement.appendChild(child)</div><div class="line">  &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上面的代码是什么意思呢？  </p>
+<ol>
+<li><p><code>var foodListElement = document.getElementById(&#39;foodList&#39;)</code>。帮我把 ID 为 <code>foodList</code> 的东西找到，先放到一个叫 <code>foodListElement</code> 的地方。  </p>
+</li>
+<li><p><code>for (var i = 0; i &lt; food.length; i++) { ... }</code>。按照 <code>food</code> 的数量，把 <code>{}</code> 里面的那一段重复做几次。  </p>
+</li>
+<li><p><code>var child = document.createElement(&#39;li&#39;)</code>。创造一个叫 <code>li</code> 的东西。  </p>
+</li>
+<li><p><code>child.innerHTML = food[i]</code>。把它里面要显示的文字，设置为第几个事物的名字。  </p>
+</li>
+<li><p><code>foodListElement.appendChild(child)</code>。把这个新创造出来的 <code>li</code>，放到之前找到的 <code>foodListElement</code> 里面。  </p>
+</li>
+</ol>
+<p>所以，<strong>命令式编程强调地是把如何完成一项任务的具体步骤都列出来</strong>。要像下达指令一样，告诉电脑第一步做什么，第二步做什么，最后达成你的目标。这里有一个地方是声明式的，就是 HTML 的 <code>&lt;ul id=&quot;foodList&quot;&gt;</code>。</p>
+<p><strong>声明式写法</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">ng-controller</span>=<span class="string">"FoodController"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">"foodName in food"</span>&gt;</span>&#123;&#123;foodName&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">  angular.controller(<span class="string">'FoodController'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.food = [<span class="string">'Cake'</span>, <span class="string">'Fruit'</span>, <span class="string">'Steak'</span>]</div><div class="line">  &#125;)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这一段代码是不是简洁很多？说不定你们都看懂了。  </p>
+<ol>
+<li><p><code>&lt;ul ng-controller=&quot;FoodController&quot;&gt;</code>。<code>ul</code> 的行为受一个叫 <code>FoodController</code> 的东西控制。  </p>
+</li>
+<li><p><code>&lt;li ng-repeat=&quot;name in food&quot;&gt;&lt;/li&gt;</code>。根据 <code>food</code> 的数量，重复生成几个 <code>li</code>，并且显示相应的食物名字在里面。  </p>
+</li>
+<li><p><code>&lt;script&gt;</code> 里面包含那段就告诉浏览器 <code>FoodController</code> 长什么样子，<code>food</code> 里面有什么东西。</p>
+</li>
+</ol>
+<p><strong>声明式编程是指把你只要告诉电脑你要达成的目标是什么，至于怎么做，它自己解决。</strong>这里，我们就不像命令式那样，要一步步教浏览器怎么做了。</p>
+<p>要注意的是，这里借助了一个叫 <em>AngularJS</em> 的工具，从而做到了用同一种语言，不同的写法。  <strong>不一定不同的编程语言才有不同的书写范式。同一种编程语言，也可以自己本身有不同的书写范式，或者通过工具来增强改变</strong>。<em>AngularJS</em> 这个工具，就是创作者帮我们抽象了教浏览器如何做事情的过程。</p>
+<h3 id="面向对象、函数式"><a href="#面向对象、函数式" class="headerlink" title="面向对象、函数式"></a>面向对象、函数式</h3><p>要数最热火朝天的编程范式，非这两个莫属了。  前一篇文章<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a>里面说过，<strong>算法 + 数据结构 = 程序</strong>。</p>
+<p><strong>面向对象的特点就是，把数据，和相应的处理算法或者说行为都放到一个相应的容器里面。承载数据和行为的容器就是对象</strong>。咋一听可能不好理解。比如，我要在电脑里面模拟一个人，这个人可以看做是一个容器或者对象。他包含了一些数据，一双眼睛，手，腿，黑色的头发等。我们还可以在这个对象上面加上<em>行走</em>这样的行为。行走可以根据这个对象有没有手或者腿来决定行走的行为是怎么样的。也可以根据你给不给他穿鞋子，或者穿什么鞋子而不同。  </p>
+<p><strong>函数式里面很重要的一个特点就是，算法本身也可以被看作一种特殊的数据，然后传给其它算法使用</strong>。这个概念如果不看代码的话，真的是不好理解。前方小高能一下。  假设我们有一些数字，我想做两个事情，一个是把它们都乘以 2，一个是算它们的平方。  </p>
+<p>下面简单抽象了两个算法 <code>doubleArray</code> 和 <code>squareArray</code>，每个都是根据传进去的数字进行一个个查看，然后做相应的操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">doubleArray</span>(<span class="params">numbers</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> result = []</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) &#123;</div><div class="line">    result[i] = numbers[i] * <span class="number">2</span> <span class="comment">// 乘以 2</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">squareArray</span>(<span class="params">numbers</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> result = []</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) &#123;</div><div class="line">    result[i] = numbers[i] * numbers[i] <span class="comment">// 乘方</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result</div><div class="line">&#125;</div><div class="line"></div><div class="line">doubleArray(numbers)</div><div class="line"><span class="comment">// -&gt; [ 2, 4, 6, 8, 10 ]</span></div><div class="line">squareArray(numbers)</div><div class="line"><span class="comment">// -&gt; [ 1, 4, 9, 16, 25 ]</span></div></pre></td></tr></table></figure>
+<p><em>//-&gt; 表示运算结果</em></p>
+<p>你们如果仔细看的话，上面的 <code>doubleArray</code> 和 <code>squareArray</code> 只有那么一点点不同啊。如果我们进一步抽象，可以变成下面的样子。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span>(<span class="params">num</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> num * <span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span>(<span class="params">num</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> num * num;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">data, fn</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> results = [];</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</div><div class="line">    results.push(fn(data[i]));</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div><div class="line"></div><div class="line">map(numbers, double)</div><div class="line"><span class="comment">// -&gt; [ 2, 4, 6, 8, 10 ]</span></div><div class="line">map(numbers, square)</div><div class="line"><span class="comment">// -&gt; [ 1, 4, 9, 16, 25 ]</span></div></pre></td></tr></table></figure>
+<p>你们可以看到，<code>double</code> 和 <code>square</code> 把不同的地方抽象出来了。<code>map</code> 则是把公共的部分抽象出来了。使用的时候，<code>double</code> 和 <code>square</code> 被当作数据一样传进去，然后使用。这就是函数式里面一个很重要的高阶函数的概念。  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>学习编程，到处都是抽象的概念。这个时候，需要我们从抽象到具象的转换来辅助我们的理解和思考。所以，这就是为什么我一开始就强调学习编程是要有具象与抽象之间转换的能力。这个不应该是单向，而是双向的。</p>
+<p>具备抽象的思维方式，目的就为能举一反三，解决通用问题。具备这种能力，对解决实际问题都是有很大的用途。所以，这也是为什么我觉得无论是否从事编程领域，都应该学习一定的编程知识。</p>
+<p>上面这些如果你都看懂了，你肯定不用担心学不会编程。如果不懂也没有关系，因为它们真的不是那么容易。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Think/">Think</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Programming/">Programming</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/" data-title="学习编程需要具备的基本能力 - 抽象 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/09/16/Capability-for-Learning-Programming-Breakdown/" title="学习编程需要具备的基本能力 - 问题分解">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  学习编程需要具备的基本能力 - 问题分解</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/09/04/Why-I-choose-convict-conditioning/"  title="我为什么选择囚徒健身？">
+ <strong>NEXT:</strong><br/> 
+ <span>我为什么选择囚徒健身？
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据与算法"><span class="toc-number">1.</span> <span class="toc-text">数据与算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模式、范例"><span class="toc-number">2.</span> <span class="toc-text">模式、范例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令式、声明式"><span class="toc-number">2.1.</span> <span class="toc-text">命令式、声明式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面向对象、函数式"><span class="toc-number">2.2.</span> <span class="toc-text">面向对象、函数式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>28</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>50</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/tags/Adapt/" style="font-size: 10px;">Adapt</a> <a href="/tags/Adoption/" style="font-size: 10px;">Adoption</a> <a href="/tags/Ajax/" style="font-size: 11.25px;">Ajax</a> <a href="/tags/Analytical-Reading/" style="font-size: 10px;">Analytical Reading</a> <a href="/tags/AngularJS/" style="font-size: 16.25px;">AngularJS</a> <a href="/tags/Async/" style="font-size: 10px;">Async</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Believe/" style="font-size: 10px;">Believe</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 15px;">Book</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Calisthenics/" style="font-size: 10px;">Calisthenics</a> <a href="/tags/Callback/" style="font-size: 10px;">Callback</a> <a href="/tags/Change/" style="font-size: 13.75px;">Change</a> <a href="/tags/Coding/" style="font-size: 12.5px;">Coding</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/Critical-Thinking/" style="font-size: 10px;">Critical Thinking</a> <a href="/tags/DB/" style="font-size: 10px;">DB</a> <a href="/tags/Delegation/" style="font-size: 11.25px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.25px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.25px;">Destiny</a> <a href="/tags/Directive/" style="font-size: 11.25px;">Directive</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Execution-context/" style="font-size: 10px;">Execution context</a> <a href="/tags/Experience/" style="font-size: 11.25px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 10px;">ExtJS</a> <a href="/tags/ExtJs/" style="font-size: 17.5px;">ExtJs</a> <a href="/tags/Flow/" style="font-size: 11.25px;">Flow</a> <a href="/tags/Function-definition/" style="font-size: 10px;">Function definition</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/GTD/" style="font-size: 11.25px;">GTD</a> <a href="/tags/Goal/" style="font-size: 15px;">Goal</a> <a href="/tags/Habit/" style="font-size: 10px;">Habit</a> <a href="/tags/HangJS/" style="font-size: 10px;">HangJS</a> <a href="/tags/Health/" style="font-size: 10px;">Health</a> <a href="/tags/HttpBackend/" style="font-size: 11.25px;">HttpBackend</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a> <a href="/tags/JAWR/" style="font-size: 10px;">JAWR</a> <a href="/tags/JSConf/" style="font-size: 11.25px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 11.25px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 17.5px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/JingJS/" style="font-size: 10px;">JingJS</a> <a href="/tags/Kanban/" style="font-size: 16.25px;">Kanban</a> <a href="/tags/Lead-Time/" style="font-size: 10px;">Lead Time</a> <a href="/tags/Leadership/" style="font-size: 11.25px;">Leadership</a> <a href="/tags/Loop/" style="font-size: 11.25px;">Loop</a> <a href="/tags/Management/" style="font-size: 17.5px;">Management</a> <a href="/tags/Maven/" style="font-size: 11.25px;">Maven</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 13.75px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/NodeJS/" style="font-size: 16.25px;">NodeJS</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Permanent/" style="font-size: 10px;">Permanent</a> <a href="/tags/Pomodoro/" style="font-size: 10px;">Pomodoro</a> <a href="/tags/Process/" style="font-size: 10px;">Process</a> <a href="/tags/Productivity/" style="font-size: 11.25px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 12.5px;">Promise</a> <a href="/tags/Prototype/" style="font-size: 10px;">Prototype</a> <a href="/tags/Prototype-Chain/" style="font-size: 10px;">Prototype Chain</a> <a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a> <a href="/tags/Retrospect/" style="font-size: 18.75px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Sinon-js/" style="font-size: 11.25px;">Sinon.js</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/String-interpolation/" style="font-size: 10px;">String interpolation</a> <a href="/tags/Stuff/" style="font-size: 10px;">Stuff</a> <a href="/tags/Tail-Call-Optimization/" style="font-size: 10px;">Tail Call Optimization</a> <a href="/tags/Thunk/" style="font-size: 10px;">Thunk</a> <a href="/tags/Time-Management/" style="font-size: 11.25px;">Time Management</a> <a href="/tags/Trampoline/" style="font-size: 10px;">Trampoline</a> <a href="/tags/Trip/" style="font-size: 12.5px;">Trip</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/UnitTest/" style="font-size: 16.25px;">UnitTest</a> <a href="/tags/Value/" style="font-size: 10px;">Value</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Webassemble/" style="font-size: 10px;">Webassemble</a> <a href="/tags/Weblogic/" style="font-size: 10px;">Weblogic</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a> <a href="/tags/Workout/" style="font-size: 10px;">Workout</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/browserify/" style="font-size: 10px;">browserify</a> <a href="/tags/bundling/" style="font-size: 10px;">bundling</a> <a href="/tags/i18n/" style="font-size: 11.25px;">i18n</a> <a href="/tags/ngClass/" style="font-size: 10px;">ngClass</a> <a href="/tags/ngRepeat/" style="font-size: 10px;">ngRepeat</a> <a href="/tags/this/" style="font-size: 10px;">this</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
