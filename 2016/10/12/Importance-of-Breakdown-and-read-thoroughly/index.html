@@ -86,7 +86,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-10-12T15:35:58.000Z" itemprop="datePublished">Oct 12 2016</time>
-    Updated:<time datetime="2016-10-12T15:33:44.000Z" itemprop="dateModified">Oct 12 2016</time>
+    Updated:<time datetime="2016-10-12T16:00:14.000Z" itemprop="dateModified">Oct 13 2016</time>
     
   </p>
 </header>
@@ -113,7 +113,7 @@
 <li>负载均衡显示活跃，<strong>C 通路正常</strong>  </li>
 <li>直接通过外网 IP（10.123.32.1）访问，浏览器显示错误，<strong>B 通路有问题</strong>  </li>
 </ol>
-<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><p>因为负载均衡是买的，日志什么的都没法看，所以在<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>提到的分析日志的方式根本做不到。我只好再一次<strong>查看负载均衡配置文档</strong>，但是没发现有什么遗漏。由于我对运维和青云的东西还是没什么经验，这时候有点抓瞎。  </p>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><p>因为负载均衡是买的，所以没法通过<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>提到的分析日志的方式来进一步分析。由于我对运维和青云的东西还是没什么经验，这时候有点抓瞎。  </p>
 <p>CTO 问我什么错误代码，我说 504。他然后上 DNSPOD 看了一下配置。不看不知道，一看吓一跳。不知道为什么竟然同一域名下配了两条不同 IP 的记录。改完后，用命令跟踪域名，这时 IP 才解析对了，补充确认<strong>DNS 通路正常</strong>了。可是，再测试发现通过域名还是无法访问。  </p>
 <p>CTO 问了一下，是不是路由器的防火墙没设置。他去改了一下，发现还是不行。</p>
 <p>我突然就想，是不是负载均衡也有防火墙啊？再看了一下负载均衡的设置页面，还真的有。（事实是它的文档有蓝色字说明，我竟然没有看到。唉，这是有多粗心）。然后 CTO 在负载均衡开放了 80 端口，就可以通过域名访问了。</p>
