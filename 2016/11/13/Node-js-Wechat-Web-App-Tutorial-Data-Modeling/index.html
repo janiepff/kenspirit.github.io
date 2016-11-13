@@ -1,0 +1,430 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Node.js 微信后台搭建系列 - 数据建模 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="这偏文章是 Node.js 搭建微信后台，实现图片交换功能文章第一篇。前序准备书籍，工具可参考 Github 项目 javascript-study-group。感兴趣者也可加入学习小组。  
+TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Node.js 微信后台搭建系列 - 数据建模 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/" title="Node.js 微信后台搭建系列 - 数据建模" itemprop="url">Node.js 微信后台搭建系列 - 数据建模</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-11-13T08:20:39.000Z" itemprop="datePublished">Nov 13 2016</time>
+    更新日期:<time datetime="2016-11-13T08:21:54.000Z" itemprop="dateModified">Nov 13 2016</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据建模"><span class="toc-number">1.</span> <span class="toc-text">数据建模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从归属和分区考虑"><span class="toc-number">1.1.</span> <span class="toc-text">从归属和分区考虑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用户信息"><span class="toc-number">1.1.1.</span> <span class="toc-text">用户信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图片信息"><span class="toc-number">1.1.2.</span> <span class="toc-text">图片信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从功能，性能考虑"><span class="toc-number">1.2.</span> <span class="toc-text">从功能，性能考虑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Evergrow-Generator-生成-Model"><span class="toc-number">2.</span> <span class="toc-text">用 Evergrow Generator 生成 Model</span></a></li></ol>
+		</div>
+		
+		<p>这偏文章是 Node.js 搭建微信后台，实现图片交换功能文章第一篇。前序准备书籍，工具可参考 Github 项目 <a href="https://github.com/kenspirit/javascript-study-group" target="_blank" rel="external">javascript-study-group</a>。感兴趣者也可加入学习小组。  </p>
+<p>TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator 生成 Model，也就是 What and How，那可以直接跳到最后。  </p>
+<h2 id="数据建模"><a href="#数据建模" class="headerlink" title="数据建模"></a>数据建模</h2><p>什么是<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1" target="_blank" rel="external">数据建模</a>？Wiki 上的解释是这样的：</p>
+<blockquote>
+<p>在软件工程中，数据建模是运用正式的数据建模技术，建立信息系统的数据模型的过程。<br>……<br>一个概念数据模型的实现可能需要多个逻辑数据模型。数据建模中的最后一步是确定逻辑数据模型到物理数据模型中到对数据，访问，性能和存储的具体要求。数据建模定义的不只是数据元素，也包括它们的结构和它们之间的关系。  </p>
+</blockquote>
+<p>这里强调的是在软件工程中的解释，因为它和数据分析领域的建模不太一样。<strong>数据建模其实就是为后台 MVC 模式里面的 Model 建模</strong>。小到一个功能，大到整个系统，数据建模的重要性都不容置疑。所以希望大家能认真结合实际项目理解清楚。上面的定义和解释比较抽象，但是每个词都可圈可点，尤其是第二段值得大家细细品味，我们通过下面的例子来说明一下。  </p>
+<p>假如现在你要实现的系统，需要存储用户上传的图片，然后可以在要实现的图片交换功能上使用。那我们来想想，这个数据模型要怎么建立？  </p>
+<h3 id="从归属和分区考虑"><a href="#从归属和分区考虑" class="headerlink" title="从归属和分区考虑"></a>从归属和分区考虑</h3><p>首先，应该不难理解，下面两大信息是要记录的。</p>
+<ul>
+<li>上传图片的用户信息  </li>
+<li>图片信息  </li>
+</ul>
+<p>有没有说了等于白说的感觉？别着急。  </p>
+<h4 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h4><p>一般来说，每个系统都要求用户必须注册后才能够操作。用户信息通常每个系统都存在，不论你是帐号密码登录，还是微博，微信登录等。  </p>
+<p>在用脚手架 <a href="https://github.com/kenspirit/generator-evergrow" target="_blank" rel="external">Evergrow</a> 一键生成的系统里面，已经有现成的 User Model，在文件 <code>user-model.js</code> 里面。本教程使用的是 Node.js 系统一般会用到的 MongoDB 来存储数据。<code>mongoose</code> 是数据库的 <code>client</code>。后端编程无论什么语言，如果需要操作数据库，都必须有相应语言的 client 才行。你先不用太深究为什么这么写，因为这就是<strong>套路</strong>。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> userSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  loginId: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>, unique: <span class="literal">true</span>&#125;,</div><div class="line">  phone: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  email: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  password: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  isAdmin: &#123;type: <span class="built_in">Boolean</span>, required: <span class="literal">true</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;,</div><div class="line">  emailResetId: <span class="built_in">String</span>,</div><div class="line">  deleted: &#123;type: <span class="built_in">Boolean</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;</div><div class="line">&#125;, &#123;strict: <span class="literal">false</span>, timestamps: &#123; createdAt: <span class="string">'createdAt'</span>, updatedAt: <span class="string">'updatedAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'User'</span>, userSchema)</div></pre></td></tr></table></figure>
+<p>从上面看到，User Model 有登录帐号 <code>loginId</code>，电话 <code>phone</code>，邮箱 <code>email</code>，密码 <code>password</code> 等其它信息。你可以猜出什么字段是必须有数据的，分别是什么数据类型，哪些是系统必须唯一（不允许重复的）。当前的模型完全没有任何放微信信息的地方，等我们讲到和微信集成的时候，会回头来看怎么修改。  </p>
+<h4 id="图片信息"><a href="#图片信息" class="headerlink" title="图片信息"></a>图片信息</h4><p>用户信息已经有地方存了，那图片信息应该放什么地方？  </p>
+<ul>
+<li>和用户信息放一起  </li>
+<li>另外建立一个模型  </li>
+</ul>
+<p>有计算机基础的同学可能觉得第一个选择太愚蠢。但是，不一定每次的选择都那么明显的。<strong>数据怎么放由什么决定？</strong>最基本两点需要考虑的是：<strong>数据的关系</strong>和<strong>存储系统的特点</strong>。</p>
+<p>从数据角度考虑，可以说图片信息属于用户，因为是用户上传的，就像是文章的评论属于文章。而且，它们的关系是一对多的关系。一个用户可以多次上传图片，一篇文章可以有很多评论。如果我们是使用关系型数据库（如 Oracle, MySQL 等），一对多关系的数据一般都分开独立的表存储才符合<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%84%E8%8C%83%E5%8C%96" target="_blank" rel="external">数据库设计范式</a>。这里不细说，有兴趣自己查看。  </p>
+<p>从存储系统的特点来考虑，MongoDB 是<strong>文档型数据库</strong>，它可以存储复杂 JavaScript Object 对象，支持层级嵌套，我们其实可以把从属关系的数据都放一起。  </p>
+<p>那我们要不要把图片信息塞到 User Model 里面呢？不行，主要有两个原因：</p>
+<ol>
+<li><p>太深入嵌套的数据在 MongoDB 查找不方便。后期我们可能要单独查找 Image Model 的数据，因为要随机挑图片。  </p>
+</li>
+<li><p>图片和用户的关系不像是车轮和汽车的关系，有限并可控。图片的数量是可以无限增长的。MongoDB 里面一个文档不能存太大的数据，所以不适合放一起。  </p>
+</li>
+</ol>
+<h3 id="从功能，性能考虑"><a href="#从功能，性能考虑" class="headerlink" title="从功能，性能考虑"></a>从功能，性能考虑</h3><p>既然我们决定了图片数据要分开另一个模型来存储，那它里面应该有什么数据呢？它可以是下面的样子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> imageSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  userId: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  url: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;</div><div class="line">&#125;, &#123;timestamps: &#123; createdAt: <span class="string">'createdAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'Image'</span>, imageSchema)</div></pre></td></tr></table></figure>
+<p>首先肯定有 <code>userId</code>，它标记了是哪个用户上传的图片。还有一个是 <code>url</code>，里面应该要存放图片的路径，无论用户上传的图片是放在服务器的硬盘，还是云服务商。数据看情况而定，但总归应该有一个图片的路径。  </p>
+<p>如果你玩过和菜头公众号的图片交换功能，它可以让你选择你随机拿到的图片是男用户，女用户，或者任何用户上传的。那这个性别信息我们应该放什么地方？性别本来是属于用户信息的一部分，理应存在 User Model。但是，从功能和性能考虑，需要作出一点点调整。  </p>
+<p>为什么呢？如果我们用的是关系型数据库，在不违反设计范式的情况下，性别应该放在存放用户信息的地方。在需要查询使用的时候，可以把放图片信息的表和用户信息表关联起来。但是，MongoDB 是不支持两个表（在 MongoDB 里面叫 Collection）关联的。如果你把性别的字段只是放在 User Model，那么要实现这个功能的时候，就要先查一下 User 那边看哪些是满足性别的用户，后头再去找 Image 看这些用户有什么图片，然后随机拿一个出来。如果把性别放在 Image Model，那就只看一个地方就可以了。  </p>
+<p>这种做法叫<strong>数据冗余</strong>。如果把它用在关系型数据库里，其实不符合范式。但是在 MongoDB 里面比较常需要用到这种做法。  </p>
+<h2 id="用-Evergrow-Generator-生成-Model"><a href="#用-Evergrow-Generator-生成-Model" class="headerlink" title="用 Evergrow Generator 生成 Model"></a>用 Evergrow Generator 生成 Model</h2><p>想清楚你要怎么设计模型后，要生成就简单了。下面一句命令就搞定：</p>
+<p><code>yo evergrow:model Image</code></p>
+<p>后面的 <code>Image</code> 代表模型的名字，你可以按照自己的喜好命名。运行了命令之后，你会看到它提醒你生成下面的目录和文件。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">create module/image/image-routes.js</div><div class="line">create module/image/image-model.js</div><div class="line">create module/image/image-manager.js</div><div class="line">create module/image/image-controller.js</div></pre></td></tr></table></figure>
+<p>现在你只需要关心 <code>image-model.js</code> 就好了。后面的章节会再详细说明它们有什么用。</p>
+<p><code>image-model.js</code> 里面的内容默认是下面那样的。你可以自己加 <code>url</code> 字段，删除一些不必要的信息，比如 updatedXXX 那些。改过后的文件我放在 <code>project</code> 目录的项目里，可供参考。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> ImageSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  createdUserId: &#123;type: Schema.Types.ObjectId, required: <span class="literal">true</span>&#125;,</div><div class="line">  createdUser: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  updatedUserId: &#123;type: Schema.Types.ObjectId, required: <span class="literal">true</span>&#125;,</div><div class="line">  updatedUser: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  deleted: &#123;type: <span class="built_in">Boolean</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;</div><div class="line">&#125;, &#123; timestamps: &#123; createdAt: <span class="string">'createdAt'</span>, updatedAt: <span class="string">'updatedAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'Image'</span>, ImageSchema)</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Think/">Think</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Wechat/">Wechat</a><a href="/tags/Node-js/">Node.js</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/Data-Modeling/">Data Modeling</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/" data-title="Node.js 微信后台搭建系列 - 数据建模 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/10/22/Back-to-basics-Wechat-Development/"  title="第一原理 - 微信开发小记">
+ <strong>NEXT:</strong><br/> 
+ <span>第一原理 - 微信开发小记
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据建模"><span class="toc-number">1.</span> <span class="toc-text">数据建模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从归属和分区考虑"><span class="toc-number">1.1.</span> <span class="toc-text">从归属和分区考虑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用户信息"><span class="toc-number">1.1.1.</span> <span class="toc-text">用户信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图片信息"><span class="toc-number">1.1.2.</span> <span class="toc-text">图片信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从功能，性能考虑"><span class="toc-number">1.2.</span> <span class="toc-text">从功能，性能考虑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Evergrow-Generator-生成-Model"><span class="toc-number">2.</span> <span class="toc-text">用 Evergrow Generator 生成 Model</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>28</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>53</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/tags/Adapt/" style="font-size: 10px;">Adapt</a> <a href="/tags/Adoption/" style="font-size: 10px;">Adoption</a> <a href="/tags/Ajax/" style="font-size: 11.25px;">Ajax</a> <a href="/tags/Analytical-Reading/" style="font-size: 10px;">Analytical Reading</a> <a href="/tags/AngularJS/" style="font-size: 16.25px;">AngularJS</a> <a href="/tags/Async/" style="font-size: 10px;">Async</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Believe/" style="font-size: 10px;">Believe</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 15px;">Book</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Calisthenics/" style="font-size: 10px;">Calisthenics</a> <a href="/tags/Callback/" style="font-size: 10px;">Callback</a> <a href="/tags/Change/" style="font-size: 13.75px;">Change</a> <a href="/tags/Choice/" style="font-size: 10px;">Choice</a> <a href="/tags/Coding/" style="font-size: 12.5px;">Coding</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/Critical-Thinking/" style="font-size: 10px;">Critical Thinking</a> <a href="/tags/DB/" style="font-size: 10px;">DB</a> <a href="/tags/Data-Modeling/" style="font-size: 10px;">Data Modeling</a> <a href="/tags/Delegation/" style="font-size: 11.25px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.25px;">Design</a> <a href="/tags/Destiny/" style="font-size: 12.5px;">Destiny</a> <a href="/tags/Directive/" style="font-size: 11.25px;">Directive</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Execution-context/" style="font-size: 10px;">Execution context</a> <a href="/tags/Experience/" style="font-size: 11.25px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 10px;">ExtJS</a> <a href="/tags/ExtJs/" style="font-size: 17.5px;">ExtJs</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Flow/" style="font-size: 11.25px;">Flow</a> <a href="/tags/Function-definition/" style="font-size: 10px;">Function definition</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/GTD/" style="font-size: 11.25px;">GTD</a> <a href="/tags/Goal/" style="font-size: 15px;">Goal</a> <a href="/tags/Habit/" style="font-size: 10px;">Habit</a> <a href="/tags/HangJS/" style="font-size: 10px;">HangJS</a> <a href="/tags/Health/" style="font-size: 10px;">Health</a> <a href="/tags/HttpBackend/" style="font-size: 11.25px;">HttpBackend</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a> <a href="/tags/JAWR/" style="font-size: 10px;">JAWR</a> <a href="/tags/JSConf/" style="font-size: 11.25px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 11.25px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 17.5px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/JingJS/" style="font-size: 10px;">JingJS</a> <a href="/tags/Kanban/" style="font-size: 16.25px;">Kanban</a> <a href="/tags/Lead-Time/" style="font-size: 10px;">Lead Time</a> <a href="/tags/Leadership/" style="font-size: 11.25px;">Leadership</a> <a href="/tags/Loop/" style="font-size: 11.25px;">Loop</a> <a href="/tags/Management/" style="font-size: 17.5px;">Management</a> <a href="/tags/Maven/" style="font-size: 11.25px;">Maven</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 12.5px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 13.75px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/NodeJS/" style="font-size: 16.25px;">NodeJS</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Permanent/" style="font-size: 10px;">Permanent</a> <a href="/tags/Pomodoro/" style="font-size: 10px;">Pomodoro</a> <a href="/tags/Problem-Solving/" style="font-size: 11.25px;">Problem Solving</a> <a href="/tags/Process/" style="font-size: 10px;">Process</a> <a href="/tags/Productivity/" style="font-size: 11.25px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 12.5px;">Promise</a> <a href="/tags/Prototype/" style="font-size: 10px;">Prototype</a> <a href="/tags/Prototype-Chain/" style="font-size: 10px;">Prototype Chain</a> <a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a> <a href="/tags/Retrospect/" style="font-size: 18.75px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Sinon-js/" style="font-size: 11.25px;">Sinon.js</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/String-interpolation/" style="font-size: 10px;">String interpolation</a> <a href="/tags/Stuff/" style="font-size: 10px;">Stuff</a> <a href="/tags/Tail-Call-Optimization/" style="font-size: 10px;">Tail Call Optimization</a> <a href="/tags/Thunk/" style="font-size: 10px;">Thunk</a> <a href="/tags/Time-Management/" style="font-size: 11.25px;">Time Management</a> <a href="/tags/Trampoline/" style="font-size: 10px;">Trampoline</a> <a href="/tags/Trip/" style="font-size: 12.5px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 10px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/UnitTest/" style="font-size: 16.25px;">UnitTest</a> <a href="/tags/Value/" style="font-size: 10px;">Value</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Webassemble/" style="font-size: 10px;">Webassemble</a> <a href="/tags/Weblogic/" style="font-size: 10px;">Weblogic</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a> <a href="/tags/Wechat/" style="font-size: 10px;">Wechat</a> <a href="/tags/Workout/" style="font-size: 10px;">Workout</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/browserify/" style="font-size: 10px;">browserify</a> <a href="/tags/bundling/" style="font-size: 10px;">bundling</a> <a href="/tags/i18n/" style="font-size: 11.25px;">i18n</a> <a href="/tags/ngClass/" style="font-size: 10px;">ngClass</a> <a href="/tags/ngRepeat/" style="font-size: 10px;">ngRepeat</a> <a href="/tags/this/" style="font-size: 10px;">this</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?acf59219da071a9b9043c94c101bf4a2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<script type="text/javascript">
+var infolinks_pid = 2898490;
+var infolinks_wsid = 0;
+</script>
+<script type="text/javascript" src="http://resources.infolinks.com/js/infolinks_main.js"></script>
+
+
+
+  </body>
+</html>
