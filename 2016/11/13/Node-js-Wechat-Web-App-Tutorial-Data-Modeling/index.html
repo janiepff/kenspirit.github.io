@@ -9,8 +9,8 @@
     
     <meta name="author" content="鹄思乱想">
     
-    <meta name="description" content="这偏文章是 Node.js 搭建微信后台，实现图片交换功能文章第一篇。前序准备书籍，工具可参考 Github 项目 javascript-study-group。感兴趣者也可加入学习小组。  
-TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator">
+    <meta name="description" content="这篇是 Node.js 搭建微信后台，实现图片交换功能教程的第一篇文章。前序准备书籍，工具可参考 Github 项目 javascript-study-group。感兴趣者也可加入学习小组。  
+TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generato">
     
     
     
@@ -87,7 +87,7 @@ TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻�
     </p>
   <p class="article-time">
     <time datetime="2016-11-13T08:20:39.000Z" itemprop="datePublished">Nov 13 2016</time>
-    Updated:<time datetime="2016-11-13T08:21:54.000Z" itemprop="dateModified">Nov 13 2016</time>
+    Updated:<time datetime="2016-11-13T08:32:02.000Z" itemprop="dateModified">Nov 13 2016</time>
     
   </p>
 </header>
@@ -99,7 +99,7 @@ TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻�
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据建模"><span class="toc-number">1.</span> <span class="toc-text">数据建模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从归属和分区考虑"><span class="toc-number">1.1.</span> <span class="toc-text">从归属和分区考虑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用户信息"><span class="toc-number">1.1.1.</span> <span class="toc-text">用户信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图片信息"><span class="toc-number">1.1.2.</span> <span class="toc-text">图片信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从功能，性能考虑"><span class="toc-number">1.2.</span> <span class="toc-text">从功能，性能考虑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Evergrow-Generator-生成-Model"><span class="toc-number">2.</span> <span class="toc-text">用 Evergrow Generator 生成 Model</span></a></li></ol>
 		</div>
 		
-		<p>这偏文章是 Node.js 搭建微信后台，实现图片交换功能文章第一篇。前序准备书籍，工具可参考 Github 项目 <a href="https://github.com/kenspirit/javascript-study-group" target="_blank" rel="external">javascript-study-group</a>。感兴趣者也可加入学习小组。  </p>
+		<p>这篇是 Node.js 搭建微信后台，实现图片交换功能教程的第一篇文章。前序准备书籍，工具可参考 Github 项目 <a href="https://github.com/kenspirit/javascript-study-group" target="_blank" rel="external">javascript-study-group</a>。感兴趣者也可加入学习小组。  </p>
 <p>TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator 生成 Model，也就是 What and How，那可以直接跳到最后。  </p>
 <h2 id="数据建模"><a href="#数据建模" class="headerlink" title="数据建模"></a>数据建模</h2><p>什么是<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1" target="_blank" rel="external">数据建模</a>？Wiki 上的解释是这样的：</p>
 <blockquote>
