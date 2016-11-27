@@ -4,19 +4,20 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>ExtJS, Jasmine, Maven - Integration | Thinking in Crowd / 鹄思乱想</title>
+    <title>Node.js 微信后台搭建系列 - 业务逻辑层 | Thinking in Crowd / 鹄思乱想</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="鹄思乱想">
     
-    <meta name="description" content="After briefing Why I am working on them, let me show you how they can be integrated all together first.
-Jasmine is a BDD Test Framework which can be i">
+    <meta name="description" content="上一章我们说到，数据建模其实就是为后台 MVC 模式里面的 Model 建模。那是不是 MVC 的 M 就仅仅是数据模型而已？其实 M 并不仅仅包含数据模型，它还包含对数据的处理，也就是业务逻辑部分。  
+那数据的处理包含什么？什么算是业务逻辑呢？我们根据脚手架生成的代码来看一下。  
+CRUD大家">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="kenspirit" />
-    <meta name="twitter:title" content="ExtJS, Jasmine, Maven - Integration | Thinking in Crowd / 鹄思乱想" />
+    <meta name="twitter:title" content="Node.js 微信后台搭建系列 - 业务逻辑层 | Thinking in Crowd / 鹄思乱想" />
       
     
     
@@ -79,15 +80,15 @@ Jasmine is a BDD Test Framework which can be i">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2012/08/06/extjs-jasmine-maven-integration/" title="ExtJS, Jasmine, Maven - Integration" itemprop="url">ExtJS, Jasmine, Maven - Integration</a>
+      <a href="/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/" title="Node.js 微信后台搭建系列 - 业务逻辑层" itemprop="url">Node.js 微信后台搭建系列 - 业务逻辑层</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
     </p>
   <p class="article-time">
-    <time datetime="2012-08-06T06:59:31.000Z" itemprop="datePublished">Aug 6 2012</time>
-    Updated:<time datetime="2015-05-20T15:09:56.000Z" itemprop="dateModified">May 20 2015</time>
+    <time datetime="2016-11-27T08:35:39.000Z" itemprop="datePublished">Nov 27 2016</time>
+    Updated:<time datetime="2016-11-27T08:32:59.000Z" itemprop="dateModified">Nov 27 2016</time>
     
   </p>
 </header>
@@ -96,38 +97,44 @@ Jasmine is a BDD Test Framework which can be i">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CRUD"><span class="toc-number">1.</span> <span class="toc-text">CRUD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务逻辑"><span class="toc-number">2.</span> <span class="toc-text">业务逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸阅读"><span class="toc-number">3.</span> <span class="toc-text">延伸阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise"><span class="toc-number">3.1.</span> <span class="toc-text">Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ORM-和-Active-Record"><span class="toc-number">3.2.</span> <span class="toc-text">ORM 和 Active Record</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#练习"><span class="toc-number">4.</span> <span class="toc-text">练习</span></a></li></ol>
 		</div>
 		
-		<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
-<p><a href="http://pivotal.github.com/jasmine/" target="_blank" rel="external">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/" target="_blank" rel="external">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error “Class not found: File” if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
-<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project’s build management.</p>
-<p>Let’s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin" target="_blank" rel="external">jasmine-maven-plugin</a> in your POM.xml like below.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.searls<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jasmine-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">extensions</span>&gt;</span>true<span class="tag">&lt;/<span class="name">extensions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">goal</span>&gt;</span>test<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">preloadSources</span>&gt;</span></div><div class="line">	    <span class="tag">&lt;<span class="name">source</span>&gt;</span>$&#123;project.basedir&#125;/[SOME_PRELOAD_FILES_GOES_HERE]<span class="tag">&lt;/<span class="name">source</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">preloadSources</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">jsSrcDir</span>&gt;</span>$&#123;project.basedir&#125;/Resources/js<span class="tag">&lt;/<span class="name">jsSrcDir</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">jsTestSrcDir</span>&gt;</span>$&#123;project.basedir&#125;/Resources/test/js<span class="tag">&lt;/<span class="name">jsTestSrcDir</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">sourceIncludes</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">include</span>&gt;</span>[TO_BE_TESTED_JS_FILES_GOES_HERE]<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">	    <span class="tag">&lt;<span class="name">include</span>&gt;</span>[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">sourceIncludes</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">specIncludes</span>&gt;</span></div><div class="line">	    <span class="tag">&lt;<span class="name">include</span>&gt;</span>[SPEC_JS_FOLDER_GOES_HERE]/*.js<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">specIncludes</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type “mvn test” in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[INFO] Executing Jasmine Specs</div><div class="line">-------------------------------------------------------</div><div class="line"> J A S M I N E   S P E C S</div><div class="line">-------------------------------------------------------</div><div class="line">[INFO]</div><div class="line">Test Suite Name 1</div><div class="line">  Spec 1</div><div class="line">  Spec 2</div><div class="line"></div><div class="line">Test Suite Name 2</div><div class="line">  Spec 3</div><div class="line"></div><div class="line">Results: 3 specs, 0 failures</div></pre></td></tr></table></figure>
-<p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
-<p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
-<p>OK, now preparation for Unit Test is done.  Let’s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
+		<p>上一章我们说到，<strong>数据建模其实就是为后台 MVC 模式里面的 Model 建模</strong>。那是不是 <a href="https://en.wikipedia.org/wiki/Model–view–controller" target="_blank" rel="external">MVC</a> 的 M 就仅仅是数据模型而已？其实 M 并不仅仅包含数据模型，它还包含对数据的处理，也就是业务逻辑部分。  </p>
+<p>那数据的处理包含什么？什么算是业务逻辑呢？我们根据脚手架生成的代码来看一下。  </p>
+<h2 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h2><p>大家可以看上次通过命令 <code>yo evergrow:model Image</code> 生成出来的文件 <code>image-manager.js</code>，里面包含这样一部分代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</div><div class="line"><span class="keyword">var</span> ImageModel = <span class="built_in">require</span>(<span class="string">'./image-model'</span>)</div><div class="line"><span class="keyword">var</span> executeQuery = <span class="built_in">require</span>(<span class="string">'../../system/db-manager'</span>).executeQuery</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  list: list,</div><div class="line">  load: load,</div><div class="line">  create: create,</div><div class="line">  update: update,</div><div class="line">  remove: remove</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这些代码是什么意思呢？<code>image-manager.js</code> 这个文件其实是一个模块，它后面可以被其它模块使用。同时它也引用了安装过的全局模块 <code>lodash</code> 和我们项目本身的 <code>image-model</code> 和 <code>db-manager</code> 这个两个模块。项目本身的模块用文件相对路径来引用，全局模块只需要名字就可以了。模块的概念现在在前端非常重要，虽然这在后端已经实践很久。<strong>分模块就是把代码分拆的足够小又不至于太小，也就是高度相关的应该放在一起，可以独立复用的就拆分</strong>。  </p>
+<p><code>image-manager.js</code> 这个模块当被其它模块引用的时候，它提供了几个基础方法：<code>create</code> (C - Create), <code>load</code> (R - Read), <code>update</code> (U - Update), <code>remove</code> (D - Delete), <code>list</code> (批量 Read)。业界说的 <strong>CRUD 其实就是对最基本的数据操作</strong>。基本上任何系统，我们都需要 CRUD。  </p>
+<h2 id="业务逻辑"><a href="#业务逻辑" class="headerlink" title="业务逻辑"></a>业务逻辑</h2><p>那业务逻辑是什么呢？简单来说，<strong>业务逻辑就是基于特定的条件，才做上面的基本数据操作</strong>。比如，数据处理前的验证，不同数据模型的相关性处理等。我们要实现的随机挑选图片的操作，就是一个业务逻辑。因为它的要求是<strong>可根据用户喜好，选择男性，女性或者任意用户上传的图片</strong>。这里就读 Read 这个操作做了特定条件的限制。所以，我们可以在这个 <code>image-manager.js</code> 里面添加一个叫 <code>random</code> 的方法。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getRandomIntInclusive = <span class="built_in">require</span>(<span class="string">'../../system/util'</span>).getRandomIntInclusive</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params">sex</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> params = &#123;&#125;</div><div class="line">  <span class="keyword">if</span> (sex) &#123;</div><div class="line">    params.sex = sex</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> list(params)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">matchedImages</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (matchedImages.totalCount === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">null</span></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">var</span> imageToPick = getRandomIntInclusive(<span class="number">0</span>, matchedImages.totalCount - <span class="number">1</span>)</div><div class="line">      <span class="keyword">return</span> matchedImages.records[imageToPick]</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们一起来看看这个方法。它只依赖一个可选的参数 <code>sex</code>，也就是代表用户的偏好。如果有指定，就按照指定的性别查找，没有的话就什么条件都不用了。这个方法复用了 <code>list</code> 这个批量读取的方法，然后 (then) 调用一个获取随机整数的函数，从上一步获取的所有匹配的图片中，抽取一张。  </p>
+<h2 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h2><p>延伸阅读的内容不是必须掌握的部分，也不影响你完成整个项目。大概了解概念也就可以了，有兴趣可以根据相关的链接，顺藤摸瓜地探索。  </p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p><code>evergrow</code> 这个脚手架的操作，都是基于 Promise。有兴趣了解 Promise 的，可以看看我用的 bluebird 库的<a href="http://bluebirdjs.com/docs/getting-started.html" target="_blank" rel="external">文档</a>。从 <a href="http://bluebirdjs.com/docs/why-promises.html" target="_blank" rel="external">Why Promise</a> 看起。  </p>
+<p>如果你目前觉得它太难，可以先不深入理解它的概念。你只要知道，你可以一直在后面接着 <code>then</code> 这样的套路也可以。<code>then</code> 其实就是<strong>然后</strong>的意思。<code>then</code> 的串就像是数据处理流水线一样，做完一步，拿着上一步的处理结果，再进行下一步。  </p>
+<h3 id="ORM-和-Active-Record"><a href="#ORM-和-Active-Record" class="headerlink" title="ORM 和 Active Record"></a>ORM 和 Active Record</h3><p>当我们的数据存放在数据库的时候，我们怎么通过编程语言来和它打交道呢？在广泛使用 RDBMS 的时候，和数据库打交道一般都是通过 SQL 来处理。但是这在后端编程语言里面嵌入使用并不是太方便，尤其表的关联处理。那么在面向对象语言的风潮里，一个叫 ORM (Object-relational mapping) 的东西出来了。它的基本目的就是帮助我们把数据库的数据，映射到编程语言里面的一个对象上面，比如 JAVA 领域的 Hibernate。ORM 主要是让开发人员可以用回通过面向对象的数据处理手段来操作数据库，比直接 SQL 这个独立的语言简单些。  </p>
+<p><a href="https://en.wikipedia.org/wiki/Active_record_pattern" target="_blank" rel="external">Active Record</a> 其实是一种架构模式，是 ORM 的一种特例。在 RDBMS 里，它把数据库的一个表映射到一个类上面。我们这里的情况是，<code>image-model.js</code> 里面引用的 <code>mongoose</code> 就是一个 ORM 框架，使用它可以把 MongoDB 里面的 collection 映射到一个 JavaScript 的对象里。<code>image-manager.js</code> 引用的 <code>ImageModel</code> 就是这样的一个对象。它默认带有 <code>create</code>, <code>update</code>, <code>remove</code> 等方法。我们通过操作这个对象，调用它的方法，修改它生成的新对象的属性，就可以修改数据库的值，添加或删除数据，进行数据库的操作。这种架构模式很方便，但是也有它的坏处。因为它把数据库的操作和单纯的数据对象绑定到一起，违反了单一责任的原则 (Single Responsibility Principle)，会导致不容易测试等问题。当你想单纯地创建一个数据对象的时候，你可能就要初始化依赖的数据库包。  </p>
+<p>我这里写的 <code>image-manager.js</code> 其实把 <code>mongoose</code> 包了一层。除了统一写法外，我不想把对 <code>mongoose</code> 的依赖，把数据库的操作暴露到 MVC 的 C (Controller) 层。如果我以后不用 <code>mongoose</code>, 用回 <code>mongodb-native</code> 库，甚至要换数据库，都可以尽量降低影响面。后面讲 MVC 的 C 层时，会进一步详述怎么和 M 这一层分离。  </p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>我们如果要给图片加上一个状态，刚上传的图片默认是等待审核，也就是不能在 <code>random</code> 方法里面返回的。要等管理员审核通过后，才能用于交换。你能够修改相应的 Model，改 <code>random</code> 方法，和加一个 <code>approve</code> 的方法吗？  </p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+  <a class="article-category-link" href="/categories/Think/">Think</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/Jasmine/">Jasmine</a><a href="/tags/Maven/">Maven</a><a href="/tags/UnitTest/">UnitTest</a><a href="/tags/NodeJS/">NodeJS</a>
+  <span></span> <a href="/tags/Wechat/">Wechat</a><a href="/tags/Node-js/">Node.js</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/Business-Logic/">Business Logic</a>
   </div>
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/" data-title="ExtJS, Jasmine, Maven - Integration | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  <div data-url="http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/" data-title="Node.js 微信后台搭建系列 - 业务逻辑层 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
   </div>
 
 </div>
@@ -136,19 +143,11 @@ Jasmine is a BDD Test Framework which can be i">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/" title="ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"  title="ExtJS, Jasmine, Maven - Why I am working on them?">
+<a href="/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/"  title="Node.js 微信后台搭建系列 - 数据建模">
  <strong>NEXT:</strong><br/> 
- <span>ExtJS, Jasmine, Maven - Why I am working on them?
+ <span>Node.js 微信后台搭建系列 - 数据建模
 </span>
 </a>
 </div>
@@ -167,7 +166,7 @@ Jasmine is a BDD Test Framework which can be i">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CRUD"><span class="toc-number">1.</span> <span class="toc-text">CRUD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务逻辑"><span class="toc-number">2.</span> <span class="toc-text">业务逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸阅读"><span class="toc-number">3.</span> <span class="toc-text">延伸阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise"><span class="toc-number">3.1.</span> <span class="toc-text">Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ORM-和-Active-Record"><span class="toc-number">3.2.</span> <span class="toc-text">ORM 和 Active Record</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#练习"><span class="toc-number">4.</span> <span class="toc-text">练习</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -246,7 +245,7 @@ Jasmine is a BDD Test Framework which can be i">
 <script>
   var disqus_shortname = 'thinkingincrowd';
   
-  var disqus_url = 'http://www.thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/';
+  var disqus_url = 'http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/';
   
   (function(){
     var dsq = document.createElement('script');
